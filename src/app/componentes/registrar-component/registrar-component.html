@@ -1,1 +1,64 @@
-<p>registrar-component works!</p>
+<section id="registro-cuenta" class="pantalla activa">
+  <div class="seccion-registro-cuenta">
+    <h1>Registrarse</h1>
+
+    <form class="formulario-registro" (ngSubmit)="validarRegistro()" #registroForm="ngForm">
+
+      <div class="formulario-registro-elemento">
+        <label>Nombres*</label>
+        <input type="text" name="nombre" placeholder="Ariana Marcela" required/>
+      </div>
+
+      <div class="formulario-registro-elemento">
+        <label>Apellidos*</label>
+        <input type="text" name="apellido" placeholder="Garcia Vasquez" required/>
+      </div>
+
+      <div class="formulario-registro-elemento">
+        <label for="email">Correo Institucional*</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Introduce tu email (debe terminar en .edu.pe)"
+          required
+        />
+      </div>
+
+      <div class="formulario-registro-elemento">
+        <label>Contraseña*</label>
+        <input
+          type="password"
+          id="password"
+          name="contrasenia"
+          placeholder="La contraseña debe tener un mínimo de 8 caracteres"
+          required
+        />
+      </div>
+
+      <div class="formulario-registro-elemento">
+        <label>Confirmar Contraseña*</label>
+        <input
+          type="password"
+          id="confirm-password"
+          name="confirmar_contrasenia"
+          placeholder="Repite tu contraseña"
+          required
+        />
+      </div>
+
+      <div class="formulario-registro-elemento">
+        <input type="submit" value="Registrarse" />
+      </div>
+
+      <div class="formulario-registro-elemento">
+        <label>¿Ya tienes cuenta? <a routerLink="/login"> Entra Aquí</a></label>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="seccion-footer">
+    <p>2025 SkillSwap. Todos los derechos reservados. <a href="assets/archivos/TerminosCondiciones.pdf" class="terminos-condiciones" target="_blank">Terminos y Condiciones</a> </p>
+  </div>
+</footer>
