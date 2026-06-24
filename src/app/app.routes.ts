@@ -7,6 +7,7 @@ import { NosotrosComponent } from './componentes/nosotros-component/nosotros-com
 import { BeneficiosComponent } from './componentes/beneficios-component/beneficios-component';
 import { ContactoComponent } from './componentes/contacto-component/contacto-component';
 import { UniAfiliadasComponent } from './componentes/uni-afiliadas-component/uni-afiliadas-component';
+import {AlianzasComponent} from './componentes/alianzas-component/alianzas-component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarComponent },
   { path: 'proyectos', component: ProyectosComponent },
+  { path: 'alianzas', component: AlianzasComponent },
   { path: 'nosotros', component: NosotrosComponent },
   { path: 'beneficios', component: BeneficiosComponent },
   { path: 'contacto', component: ContactoComponent },

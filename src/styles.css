@@ -215,7 +215,7 @@ body {
 .seccion-llamado-accion {
   padding-top: 75px;
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-  url('assets/images/imagen_banner.png');
+  url('/images/imagen_banner.png');
   background-size: cover;
   height: 100vh;
   display: flex;
@@ -4977,11 +4977,11 @@ body.dark-mode {
 /* Ajustes específicos para elementos que no usan variables */
 
 body.dark-mode .icono-lupa {
-  content: url("assets/images/imagen-lupa-dkmd.png");
+  content: url("/images/imagen-lupa-dkmd.png");
 }
 
 body.dark-mode .logo-ss {
-  content: url("assets/images/SkillSwap_logo_dkmd.png");
+  content: url("/images/SkillSwap_logo_dkmd.png");
 }
 
 /* Títulos y texto fuerte */
