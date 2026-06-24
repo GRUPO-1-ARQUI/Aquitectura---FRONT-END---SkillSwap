@@ -1,0 +1,104 @@
+
+<nav class="barra-navegacion">
+  <!-- Botón menú hamburguesa -->
+  <div class="menu-hamburguesa" id="btn-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="logo">
+    <a href="../index.html">
+      <img src="../assets/images/SkillSwap_logo.png" alt="Logo de la aplicacion SkillSwap" />
+    </a>
+  </div>
+
+  <div class="menu-horizontal">
+    <ul class="menu-horizontal-opciones">
+      <li class="dropdown">
+        <a href="#" class="dropbtn" id="btn-alianzas">Alianzas</a>
+        <div class="dropdown-content" id="submenu-alianzas">
+          <a href="alianzas.html#beneficios">Beneficios</a>
+          <a href="alianzas.html#universidades-afiliadas">Universidades Afiliadas</a>
+          <a href="alianzas.html#contacto-form">Contacto</a>
+        </div>
+      </li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="index-sobre-nosotros.html">Sobre nosotros</a></li>
+
+      <li>
+        <a href="index-login.html">
+          <button class="btn-iniciarsesion">Iniciar Sesion</button>
+        </a>
+      </li>
+
+      <li>
+        <a href="index-registrarse.html">
+          <button class="btn-registrase">Registrarse</button>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</nav>
+
+<section id="inicio-sesion" class="pantalla activa">
+  <div class="seccion-inicio-sesion">
+    <h1>Inicio de Sesión</h1>
+
+    <form class="formulario-inicio-sesion" onsubmit="validarLogin(event)">
+
+      <div class="formulario-inicio-sesion-elemento">
+        <label for="email">Usuario o Correo Institucional*</label>
+        <input type="text" id="email" name="correo" placeholder="Ej: admin, u20201234@upc.edu.pe" required>
+      </div>
+
+      <div class="formulario-inicio-sesion-elemento">
+        <label for="password">Contraseña*</label>
+        <input type="password" id="password" name="contrasenia" placeholder="Introduce tu contraseña" required>
+      </div>
+
+      <div class="formulario-inicio-sesion-elemento">
+        <input type="submit" value="Iniciar Sesión">
+      </div>
+    </form>
+
+    <label>¿No tienes cuenta?
+      <a href="index-registrarse.html">Regístrate</a>
+    </label>
+  </div>
+</section>
+
+<script src="../assets/scripts/login.js"></script>
+
+<footer>
+  <div class="seccion-footer">
+    <p>2025 SkillSwap... Todos los derechos reservados. <a href="../archivos/TerminosCondiciones.pdf" class="terminos-condiciones">Terminos y Condiciones</a> </p>
+  </div>
+</footer>
+<!--script menu hamburguesa-->
+<script>
+  // 1. MENU HAMBURGUESA PRINCIPAL
+  const btnMenu = document.getElementById('btn-menu');
+  const menu = document.querySelector('.barra-navegacion .menu-horizontal');
+
+  if(btnMenu) {
+    btnMenu.addEventListener('click', () => {
+      menu.classList.toggle('activo');
+    });
+  }
+
+  // 2. SUBMENU ALIANZAS (SOLO MÓVIL)
+  const btnAlianzas = document.getElementById("btn-alianzas");
+  const submenuAlianzas = document.getElementById("submenu-alianzas");
+
+  if (btnAlianzas && submenuAlianzas) {
+    btnAlianzas.addEventListener("click", (event) => {
+      // Solo actuar si estamos en modo celular
+      if (window.innerWidth <= 768) {
+        event.preventDefault(); // Evita que recargue la página al tocar "Alianzas"
+        submenuAlianzas.classList.toggle("activo"); // Abre o cierra
+      }
+    });
+  }
+</script>
+

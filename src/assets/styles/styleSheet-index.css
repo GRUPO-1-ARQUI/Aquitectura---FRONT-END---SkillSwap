@@ -1,0 +1,670 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* ayuda a que los tamaños sean más predecibles */
+  font-family: "Inter", sans-serif;
+}
+
+:root
+{
+    /*Variables de color*/
+    --background-color: #f7f9fc;
+    --primary-color: #193b69;
+    --secondary-color: #FFC107;
+    --border-color: #ccc;
+    --white-color: #ffffff;
+
+    /*Variables de color de texto*/
+    --button-text-color: #ffff;
+    --placeholder-text-color: #f4f4f4;
+    --text-color: #000000;
+
+    /*Variables de tamanio del nav y foot*/
+    --nav-bar-height: 75px;
+    --footer-height: 58px;
+
+    /*Variables de texto (Tamaño, Peso y Interlineado)*/
+    --h1-font-size: 32px;
+    --h1-font-weight: bold;
+
+    --h2-font-size: 24px;
+    --h2-font-weight: 600;
+
+    --h3-font-size: 20px;
+    --h3-font-weight: 600;
+
+    --base-font-size: 16px;
+    --base-font-weight: 400;
+
+    --label-font-size: 14px;
+    --label-font-weight: 500;
+
+    --line-height: 1.5;
+}
+
+body 
+{
+    background-color: var(--background-color); /* Un fondo gris muy claro */
+    margin-top: var(--nav-bar-height); /* Espacio para la barra de navegación fija */
+}
+
+.menu-hamburguesa {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.menu-hamburguesa span {
+  width: 30px;
+  height: 3px;
+  background-color: #000;
+  transition: 0.3s;
+}
+
+
+.barra-navegacion
+{
+  display: flex;
+  background-color: var(--white-color);
+  margin: 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  height: 75px;
+  width: 100%;
+  position: fixed;
+  border-bottom: 1px solid var(--background-color);
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.menu-horizontal-opciones 
+{
+  list-style: none;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-around;
+  color: var(--text-color);
+  width: 100%;
+  padding: 0;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-horizontal-opciones li a {
+  list-style: none;
+  text-decoration: none;
+  display: block;
+  color: var(--text-color);
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.menu-horizontal-opciones li a:hover {
+  color: #193b69;
+}
+
+.btn-iniciarsesion {
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-size: 14px;
+  background-color: #005a9c;
+  color: var(--button-text-color);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-registrase 
+{
+  border-radius: 50px;
+  padding: 6px 10px;
+  font-size: 14px;
+  background-color: var(--secondary-color);
+  color: var(--button-text-color);
+  border: none;
+  cursor: pointer;
+}
+
+.menu-vertical-lp {
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  display: none;
+  width: 150px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.menu-horizontal-opciones li:hover .menu-vertical-lp 
+{
+  display: block;
+}
+
+.menu-horizontal-opciones li:hover .menu-vertical-lp-conts 
+{
+  display: block;
+}
+
+.menu-vertical-lp li a 
+{
+  padding: 15px 15px 15px 20px;
+  margin: 5px;
+  color: var(--white-color);
+}
+.menu-vertical-lp li a:hover {
+  color: var(--secondary-color);
+}
+
+.menu-vertical-lp-conts {
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  display: none;
+  width: 150px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.menu-vertical-lp-conts li a {
+  padding: 7px 15px 7px 7px;
+  margin: 5px;
+  color: var(--white-color);
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  justify-content: left;
+}
+
+.menu-vertical-lp-conts li a:hover{
+  color: var(--secondary-color);
+}
+
+.conts-logos {
+  margin: 5px;
+  height: 30px;
+  max-height: 30px;
+}
+
+.logo {
+  padding-top: 5px;
+  align-items: center;
+}
+
+.logo img {
+  width: 100%;
+  max-width: 200px;
+}
+
+.seccion-llamado-accion {
+  padding-top: 75px;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(../images/imagen_banner.png);
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.llamado-accion-texto 
+{
+  color: var(--white-color);
+  text-align: center;
+  font-size: 48px;
+  width: 80%;
+}
+
+.llamado-accion-boton {
+  margin: 30px auto 0px auto;
+  display: block;
+  font-family: inherit;
+  color: var(--button-text-color);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* -----------Seccion 2 ------*/
+.seccion-nosotros {
+  margin: 50px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.division-general-nosotros {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+}
+.division-contenido-row{
+  display: flex;
+  flex-direction: row; 
+  gap: 50px; 
+  justify-content: center;
+  width: 100%;
+}
+.division-nosotros-txt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.elementos-nosotros-txt{
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    gap: 30px;
+    max-width: 90%;
+}
+.llamado-accion-boton2{
+
+  font-family: inherit;
+  color: var(--button-text-color);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+.ns-icono img {
+    /* Define un tamaño fijo para todos los iconos */
+    width: 50px; 
+    height: auto;
+}
+
+.division-nosotros-ima  
+{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-content: center;
+}
+.division-nosotros-ima img 
+{
+  width: 100%;
+}
+
+/* Seccion 3 */
+.seccion-socios
+{
+    margin: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.socios-logos 
+{
+    padding: 30px 0px;
+    width: 100%;
+}
+
+.socios-logos-row
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.socio-logo{
+  width: 15%;
+  padding: 20px;
+  width: 200px;
+  height: 200px;
+  align-content: center;
+}
+.socio-logo img
+{
+    width: 100%; 
+    height: 100%;
+    object-fit: contain; /* Mantiene proporción sin deformarse */
+}
+
+.seccion-atp 
+{
+    margin: 50px;
+  display: flex;
+  flex-direction: column; 
+}
+
+.div-video-atp {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.div-video-atp video {
+  width: 100%; /* ancho de la pantalla */
+  max-width: 60rem; /* ancho máximo de 500px */
+  justify-content: center;
+}
+
+.contact-section {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  background-color: #f4f4f4;
+}
+
+.contact-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white-color);
+  border: 1px solid var(--border-color);
+  padding: 15px 25px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contact-bar h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.contact-button {
+  background-color: #d90000;
+  color: var(--white-color);
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.contact-button:hover 
+{
+  background-color: #b30000;
+}
+
+.dropdown-container 
+{
+  position: relative;
+  display: inline-block; 
+}
+
+.dropdown-menu {
+  display: none; 
+  position: absolute; 
+  right: auto;
+  top: 100%; 
+  background-color: #f1f1f1; 
+  min-width: 200px; 
+  border: 1px solid var(--border-color);
+  border-top: none; 
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); 
+  z-index: 1; 
+}
+
+.dropdown-menu a 
+{
+  color: #333; 
+  padding: 12px 16px; 
+  text-decoration: none; 
+  display: block; 
+  font-size: 1rem;
+}
+
+.dropdown-menu a:hover 
+{
+  background-color: #ddd;
+}
+
+.dropdown-container:hover .dropdown-menu 
+{
+  display: block;
+}
+
+.seccion-footer
+{
+  background-color: #193b69;
+  color: var(--white-color);
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;   
+}
+
+.seccion-footer p, a
+{
+  margin: 0 auto;
+    color: var(--white-color);
+    text-decoration: none;
+}
+
+.btn-iniciarsesion,
+.btn-registrase,
+.llamado-accion-boton,
+.llamado-accion-boton2,
+.contact-button {
+  /* Añadimos una transición suave para los efectos */
+  transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.btn-iniciarsesion:hover,
+.btn-registrase:hover,
+.llamado-accion-boton:hover,
+.llamado-accion-boton2:hover,
+.contact-button:hover {
+  transform: scale(1.05); /* Zoom botón ligeramente */
+  filter: brightness(110%); /* el brillo */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* sombra sutil */
+}
+
+.elementos-nosotros-txt {
+  padding: 10px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.elementos-nosotros-txt:hover {
+  transform: translateY(-5px); /* Eleva tarjeta */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Añade sombra */
+}
+
+.division-nosotros-ima img {
+  transition: transform 0.3s ease-out;
+  border-radius: 8px; /* Para que las esquinas se vean suaves al crecer */
+}
+
+.division-nosotros-ima img:hover {
+  transform: scale(1.03); /* Agranda la imagen un 3% */
+}
+
+.socio-logo:hover {
+  transform: translateY(-5px); /* Eleva tarjeta */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Añade sombra */
+  cursor: pointer;
+}
+
+.div-video-atp video {
+  transition: box-shadow 0.3s ease;
+  border-radius: 8px; /* sombra */
+}
+
+.div-video-atp video:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra */
+}
+
+/* Tablets y pantallas medianas */
+@media screen and (max-width: 1024px) 
+{
+    .division-contenido-row 
+    {
+        flex-direction: column-reverse;
+        gap: 30px;
+        align-items: center;
+
+    }
+
+    .elementos-nosotros-txt
+    {
+        width: 65%;
+    }
+
+    .division-nosotros-ima img {
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .llamado-accion-texto {
+        font-size: 36px;
+        width: 90%;
+    }
+
+    .seccion-nosotros {
+        margin: 30px;
+    }
+
+    .barra-navegacion {
+        padding: 0 10px;
+    }
+}
+
+/* Móviles (smartphones) */
+@media screen and (max-width: 768px) {
+    
+    /* 1. EL CONTENEDOR DEL MENÚ (EL CUADRO BLANCO) */
+    .menu-horizontal-opciones {
+        display: flex;
+        flex-direction: column; 
+        
+        /* CAMBIO CLAVE 1: Alinear a la izquierda */
+        align-items: flex-start; 
+        
+        gap: 20px;
+        padding: 30px 25px; /* Espacio interno */
+        background-color: #ffffff;
+        
+        position: fixed; /* Fixed es mejor para menús laterales */
+        top: 75px; /* Altura de tu navbar para que no la tape */
+        
+        /* CAMBIO CLAVE 2: Ancho reducido (ya no 100%) */
+        width: 260px; 
+        height: calc(100vh - 75px); /* Que ocupe todo el alto disponible */
+        
+        /* Estado inicial: Oculto a la izquierda */
+        left: -100%; 
+        
+        transition: left 0.3s ease;
+        z-index: 1000;
+        
+        /* Sombra suave solo al lado derecho para dar profundidad */
+        box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+        border-right: 1px solid #eee;
+    }
+
+    /* ESTADO ACTIVO: Esto hace que aparezca */
+    .menu-horizontal.activo .menu-horizontal-opciones {
+        left: 0;
+    }
+
+    /* 2. AJUSTES DE LOS ENLACES (TEXTO) */
+    .menu-horizontal-opciones li {
+        width: 100%; /* Para que el área de click sea ancha */
+    }
+    
+    .menu-horizontal-opciones li a {
+        display: block;
+        width: 100%;
+        text-align: left; /* Asegurar texto a la izquierda */
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0; /* Línea separadora sutil opcional */
+    }
+
+    /* 3. BOTONES (Iniciar sesión / Registrarse) */
+    .btn-iniciarsesion,
+    .btn-registrase {
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+        /* Quitamos margin-left/right auto para que respeten el flex-start */
+    }
+
+    /* 4. HAMBURGUESA (Se mantiene igual) */
+    .menu-hamburguesa {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        padding: 10px;
+        z-index: 1100;
+    }
+
+    .menu-hamburguesa span {
+        width: 30px;
+        height: 3px;
+        background-color: #000;
+        transition: 0.3s;
+    }
+
+}
+
+/* --- ARREGLO MENU HAMBURGUESA DROPDOWN --- */
+@media (max-width: 768px) { /* Asegúrate que este ancho coincida con tu punto de quiebre móvil */
+    
+    /* 1. Quitamos la posición flotante para que caiga como lista normal */
+    .dropdown-content {
+        position: static; /* Importante: Esto evita que "salga para el costado" */
+        display: none;    /* Oculto por defecto */
+        width: 100%;      /* Que ocupe todo el ancho disponible */
+        box-shadow: none; /* Quitamos sombras para que se vea limpio */
+        padding-left: 20px; /* Un poco de sangría para que se note que es sub-menú */
+        background-color: rgba(0,0,0,0.05); /* Un fondo sutil opcional */
+    }
+
+    /* 2. Clase que usaremos con JavaScript para abrirlo */
+    .dropdown-content.activo {
+        display: block;
+    }
+    
+    /* Opcional: Ajustar el enlace principal para que parezca botón */
+    .dropbtn {
+        width: 100%;
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    /* 1. Ocultamos el submenú por defecto */
+    #submenu-alianzas {
+        display: none !important; /* El !important asegura que borre cualquier rastro anterior */
+        position: static;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    /* 2. MUY IMPORTANTE: Desactivamos el hover de escritorio */
+    /* Esto evita que se abra solo con "pasar el dedo" o al cargar */
+    .dropdown:hover .dropdown-content {
+        display: none; 
+    }
+
+    /* 3. Solo se muestra si JavaScript le pone la clase 'activo' */
+    #submenu-alianzas.activo {
+        display: block !important;
+    }
+}

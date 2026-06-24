@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-index-component',
+  selector: 'app-index-login-component',
   imports: [],
   templateUrl: './index-component.html',
   styleUrl: './index-component.css',

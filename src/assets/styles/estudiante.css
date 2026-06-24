@@ -1,0 +1,558 @@
+/* El badge de verificado arriba a la derecha */
+.badge-verificado-propio {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* El punto de estado abajo a la derecha */
+.indicador-estado-perfil {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #28a745; /* Verde = Disponible */
+    border: 3px solid white; /* Borde blanco para resaltar */
+    transition: background-color 0.3s ease; /* Animación suave al cambiar color */
+}
+
+/* Clase para cuando esté ocupado (Rojo) */
+.indicador-estado-perfil.ocupado {
+    background-color: #dc3545; /* Rojo = No disponible */
+}
+/* --- CORRECCIÓN DE ALINEACIÓN PERFIL --- */
+
+/* 1. Alinear los títulos igual que los labels de arriba */
+.temas-dominio strong,
+.habilidades strong {
+  display: block;          /* Para que ocupe su propia línea */
+  font-weight: bold;
+  margin-bottom: 10px;     /* Espacio antes de los botones */
+  margin-top: 15px;        /* Espacio para separar del bloque anterior */
+  color: #333;             /* Asegurar color consistente */
+}
+
+/* 2. Alinear las listas de botones */
+.temas-dominio ul,
+.habilidades ul {
+  list-style: none;
+  padding-left: 0;         /* IMPORTANTE: Quita la sangría izquierda */
+  margin: 0;               /* Quita márgenes extraños */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;               /* Espacio entre botones */
+}
+
+/* 3. Estilo de los items (tags) */
+.temas-dominio li,
+.habilidades li {
+  background-color: #e0e0e0;
+  padding: 8px 16px;       /* Un poco más de relleno para que se vean mejor */
+  border-radius: 20px;
+  font-size: 14px;
+  color: #333;
+  display: flex;           /* Para alinear texto e iconos si los hay */
+  align-items: center;
+}
+
+/* 4. Botón de agregar (+) */
+.agregar {
+  background-color: #d1ffd1 !important; /* Verde suave */
+  cursor: pointer;
+  font-weight: bold;
+  border: 1px solid #b2eeb2; /* Un borde sutil */
+  transition: transform 0.2s ease;
+}
+
+.agregar:hover {
+  transform: scale(1.1);
+}
+
+.grupo-botones {
+    margin-bottom: 20px;
+
+}
+
+.ajustes{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/*vamos a centrar*/
+.botones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+}
+
+
+/* --- 1. ESTADO NORMAL (Escritorio / PC) --- */
+.texto-solo-movil {
+    display: none; /* Oculto en PC */
+}
+
+/* --- 2. ESTADO MÓVIL (Media Query) --- */
+@media screen and (max-width: 768px) {
+
+    /* --- CAMBIO DE ICONOS A TEXTO --- */
+    
+    /* 1. Ocultamos el SVG de Notificaciones */
+    #nav-notificaciones svg {
+        display: none !important;
+    }
+
+    .dark-mode .menu-horizontal-opciones {
+        background-color: #333;
+    }
+
+    /* 2. Ocultamos la foto de perfil */
+    #nav-perfil .estudiante-foto-usuario-nav {
+        display: none !important;
+    }
+
+    /* 3. Ocultamos la Lupa (NUEVO) */
+    #nav-buscar .icono-lupa {
+        display: none !important;
+    }
+
+    /* 4. Mostramos el texto mágico */
+    .texto-solo-movil {
+        display: inline-block !important;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #000; 
+        font-weight: 600;
+    }
+
+    /* 5. Ajustes de alineación (Flexbox) para los 3 elementos */
+    #nav-notificaciones, 
+    #nav-perfil,
+    #nav-buscar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Alineado a la izquierda */
+        gap: 10px; 
+        width: 100%;
+        padding: 10px 0; /* Un poco de aire arriba y abajo */
+    }
+
+    /* Ajuste del Badge (número rojo) */
+    .badge-notificaciones {
+        position: static;
+        transform: none;
+        margin-left: 5px;
+    }
+
+    
+    /* 1. Contenedor principal: le decimos que se comporte como bloque normal */
+.dropdown-notificaciones-container {
+    display: block;
+    width: 100%;
+}
+
+/* 2. El menú desplegable (RESET TOTAL) */
+#dropdown-notificaciones {
+    /* Quitamos cualquier posición flotante que venga del escritorio */
+    position: static !important;
+    float: none !important;
+    
+    /* Diseño visual "Integrado" */
+    width: 100% !important;
+    box-shadow: none !important; /* Sin sombras para que parezca parte del menú */
+    border: none !important;
+    border-top: 1px solid #f0f0f0 !important; /* Una linea sutil arriba */
+    border-bottom: 1px solid #f0f0f0 !important; /* Una linea sutil abajo */
+    background-color: #f9f9f9 !important; /* Un gris muy clarito para diferenciarlo */
+    
+    /* Espaciado */
+    margin: 0;
+    padding: 0;
+    
+    /* Oculto por defecto */
+    display: none;
+}
+
+/* 3. Cuando el JS lo activa */
+#dropdown-notificaciones.activo {
+    display: block !important;
+    /* Animación opcional de aparición */
+    animation: fadeIn 0.3s ease;
+}
+
+/* 4. Arreglo del HEADER (La parte que decías que podía fallar) */
+#dropdown-notificaciones .dropdown-header {
+    background-color: transparent !important; /* Quitamos colores fuertes */
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+#dropdown-notificaciones .dropdown-header h3 {
+    font-size: 14px;
+    color: #555; /* Texto gris suave */
+    margin: 0;
+    font-weight: 600;
+}
+
+/* 5. Arreglo de las TARJETAS (Para que no se vean aplastadas) */
+#dropdown-notificaciones .dash-est-tarjeta-solicitud {
+    display: flex;
+    flex-direction: column !important; /* Elementos uno debajo del otro */
+    align-items: flex-start !important;
+    gap: 10px;
+    
+    /* Quitamos bordes o sombras de las tarjetas para que sea más limpio */
+    box-shadow: none !important; 
+    border: 1px solid #eee;
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box; /* Vital para que no se salga del ancho */
+}
+
+/* 6. Arreglo de las IMAGENES dentro de las tarjetas */
+.dash-est-solicitud-img {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+/* 7. Arreglo de los BOTONES de acción */
+.dash-est-solicitud-acciones {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end; /* Botones a la derecha */
+}
+
+/* Pequeña animación para suavizar */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+}
+
+
+
+
+/* ==========================================
+   RESPONSIVE: VIDEOLLAMADA (Estilo App Móvil)
+   ========================================== */
+
+@media screen and (max-width: 768px) {
+
+    /* 1. CONTENEDOR PRINCIPAL */
+    /* Quitamos el scroll del body para que se sienta como una app */
+    body.en-llamada {
+        overflow: hidden;
+    }
+
+    /* 2. LAYOUT (Video + Sidebar) */
+    /* Cambiamos de fila (lado a lado) a columna apilada */
+    .videollamada-layout {
+        flex-direction: column;
+        position: relative; /* Para poder posicionar cosas encima */
+    }
+
+    /* 3. VIDEO PRINCIPAL (Fondo) */
+    .video-screen-principal {
+        position: absolute; /* Lo sacamos del flujo para que sea el fondo */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; /* Ocupa todo el espacio disponible */
+        z-index: 1;   /* Nivel más bajo */
+    }
+    
+    /* Ajuste de la imagen del video para que cubra todo (tipo cover) */
+    .img-video-full {
+        object-fit: cover; 
+    }
+    
+    /* La etiqueta del nombre la subimos un poco para que no la tapen los controles */
+    .etiqueta-nombre {
+        top: 20px;
+        left: 20px;
+        bottom: auto; /* Quitamos la posición de abajo */
+        background-color: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px); /* Efecto borroso elegante */
+    }
+
+    /* 4. SIDEBAR PARTICIPANTES (Tira Horizontal) */
+    .sidebar-participantes {
+        position: absolute;
+        bottom: 100px; /* Justo encima de la barra de controles */
+        left: 0;
+        
+        width: 100%; /* Ancho total */
+        height: 120px; /* Altura fija para la tira */
+        
+        flex-direction: row; /* Los ponemos en fila horizontal */
+        background-color: transparent; /* Fondo transparente */
+        border: none;
+        
+        overflow-x: auto; /* Permitir scroll horizontal si hay muchos */
+        overflow-y: hidden;
+        
+        gap: 10px;
+        padding: 10px;
+        z-index: 5; /* Encima del video */
+        
+        /* Ocultar scrollbar para que se vea limpio */
+        scrollbar-width: none; 
+    }
+    
+    /* Ocultar scrollbar en Chrome/Safari */
+    .sidebar-participantes::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Tarjetas pequeñas de los participantes */
+    .tarjeta-video-mini {
+        width: 90px;  /* Más pequeños */
+        height: 100%; 
+        min-width: 90px; /* Para que no se aplasten */
+        background-color: #333;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* 5. CHAT (Pantalla Completa - Overlay) */
+    .chat-lateral-llamada.activo {
+        position: fixed; /* Fijo respecto a la ventana */
+        top: 0;
+        left: 0;
+        width: 100% !important; /* Forzamos ancho completo */
+        height: 100% !important; /* Forzamos altura completa */
+        z-index: 2000; /* Encima de TODO, incluso del menú de navegación */
+        border: none;
+        animation: slideUp 0.3s ease; /* Animación de entrada */
+    }
+
+    /* Animación para que el chat suba como una hoja */
+    @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+
+    /* Ajuste del botón cerrar del chat para que sea más grande/táctil */
+    .header-chat-llamada button {
+        font-size: 24px;
+        padding: 10px;
+    }
+
+    /* 6. BARRA DE CONTROLES (Botones abajo) */
+    .controles-videollamada-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10; /* Encima del video y participantes */
+        
+        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); /* Degradado elegante */
+        border-top: none;
+        padding-bottom: 20px; /* Espacio para el gesto de iPhone */
+        height: auto;
+        padding-top: 20px;
+    }
+
+    /* Ajustamos los botones para que quepan bien */
+    .btn-control, 
+    .btn-control-llamada {
+        width: 45px;
+        height: 45px;
+        background-color: rgba(255, 255, 255, 0.2); /* Semitransparente */
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Botón colgar destaca más */
+    .btn-control.colgar, 
+    .btn-control-llamada.colgar {
+        width: 55px;
+        height: 55px;
+        background-color: #ea4335; /* Rojo sólido */
+    }
+}
+
+
+/* ==========================================
+   DISEÑO RESPONSIVE: PERFIL Y ESTADÍSTICAS
+   ========================================== */
+
+/* Estilos base para la nueva sección de estadísticas */
+.perfil-stats {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.perfil-stats p {
+    margin-bottom: 10px; /* Separación entre créditos y estrellas */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Separa etiqueta y valor */
+}
+
+/* MEDIA QUERY: Solo aplica en pantallas menores a 768px (Tablets y Celulares) */
+@media screen and (max-width: 768px) {
+    
+    /* 1. Hacemos que las dos columnas del perfil se pongan una debajo de otra */
+    .contenido-doble {
+        flex-direction: column; /* Cambio clave: de fila a columna */
+        gap: 20px;
+    }
+
+    /* 2. Que las columnas ocupen todo el ancho */
+    .columna {
+        width: 100%;
+        flex: none; /* Evita comportamientos extraños de flex */
+    }
+
+    /* 3. Ajustes visuales para la nueva sección en móvil */
+    .perfil-stats {
+        background-color: #f8f9fa; /* Un fondo gris suave para destacar */
+        padding: 15px;
+        border-radius: 10px;
+        border-top: none; /* Quitamos la línea superior, usamos el fondo */
+        margin-top: 15px;
+    }
+    
+    /* Ajuste para modo oscuro móvil */
+    body.dark-mode .perfil-stats {
+        background-color: #2c2c2c;
+    }
+
+    /* Centramos la foto de perfil si no lo estaba */
+    .info-personal {
+        text-align: center; 
+    }
+    
+    /* Alinear los textos de info personal a la izquierda para que se lean bien */
+    .info-personal p {
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+/* ==========================================
+   DISEÑO RESPONSIVE: PERFIL TUTOR (VENTANA EMERGENTE)
+   ========================================== */
+
+/* Se activa cuando la pantalla es menor a 900px (Tablets y Celulares) */
+@media (max-width: 900px) {
+    
+    /* 1. Cambiamos la tarjeta para que sea vertical */
+    .tarjeta-perfil-tutor {
+        flex-direction: column; /* Elementos uno debajo del otro */
+        align-items: center;    /* Centramos todo */
+        padding: 25px 20px;     /* Reducimos el relleno para ganar espacio */
+        gap: 30px;              /* Espacio entre la foto y la info */
+        height: auto;           /* Dejamos que la altura crezca lo que necesite */
+        max-height: none;       /* Quitamos límites de altura si los hubiera */
+    }
+
+    /* 2. Ajustamos la columna de la foto (Izquierda) */
+    .perfil-columna-izquierda {
+        max-width: 100%;        /* Que ocupe todo el ancho disponible */
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0; /* Una línea para separar */
+        padding-bottom: 30px;
+    }
+
+    /* 3. Ajustamos la columna de información (Derecha) */
+    .perfil-columna-derecha {
+        width: 100%;            /* Que ocupe todo el ancho */
+    }
+
+    /* 4. Ajustes del encabezado (Nombre e Iconos) */
+    .perfil-header-derecha {
+        flex-direction: column; /* Nombre arriba, iconos abajo */
+        align-items: center;    /* Centrado */
+        text-align: center;
+        gap: 10px;
+    }
+
+    /* 5. Centrar los tags (etiquetas amarillas) */
+    .perfil-tags-container {
+        justify-content: center;
+    }
+
+    /* 6. Ajuste para la imagen */
+    .perfil-imagen-container {
+        width: 180px;  /* Un poco más pequeña en móvil para que no ocupe todo */
+        height: 180px;
+    }
+    
+    /* 7. Ajuste para las reseñas */
+    .tarjeta-reseña {
+        flex-direction: column; /* Imagen arriba, texto abajo */
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* ==========================================
+   DISEÑO RESPONSIVE: AJUSTES (Apariencia y Chat)
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    /* 1. El contenedor principal deja de ser Grid de 2 columnas */
+    .ajustes-layout {
+        display: flex;
+        flex-direction: column; /* Apila los elementos uno sobre otro */
+        height: auto; /* Deja que la altura crezca según el contenido */
+        min-height: auto; /* Quita restricciones de altura mínima */
+    }
+
+    /* 2. La barra lateral (Sidebar) ocupa todo el ancho */
+    .ajustes-sidebar, 
+    .ajustes-sidebar-chat {
+        width: 100%; /* Ancho completo */
+        flex-shrink: 0;
+        border-right: none; /* Quitamos la línea divisoria de la derecha */
+        border-bottom: 1px solid #e0e0e0; /* Ponemos línea abajo para separar */
+        padding: 20px;
+    }
+
+    /* 3. El contenido principal también ocupa todo */
+    .ajustes-contenido,
+    .ajustes-contenido-chat {
+        padding: 20px 15px; /* Reducimos un poco el padding lateral */
+        overflow-y: visible; /* Quitamos scroll interno, usamos el de la página */
+    }
+
+    /* 4. Ajuste de los botones del menú para que sean fáciles de tocar */
+    .ajustes-link, 
+    .ajustes-link-chat {
+        text-align: center; /* Texto centrado */
+        justify-content: center; /* Icono y texto centrados */
+        padding: 12px;
+        margin-bottom: 5px;
+        font-size: 16px; /* Tamaño legible */
+    }
+
+    /* 5. Ajustes específicos para los selectores de color (Apariencia) */
+    .selector-color-wrapper {
+        justify-content: center; /* Centrar las bolitas de colores */
+        flex-wrap: wrap; /* Si hay muchas, que bajen */
+    }
+
+    /* 6. Ajuste para el título del sidebar */
+    .ajustes-titulo-sidebar,
+    .ajustes-titulo-sidebar-chat {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+}
