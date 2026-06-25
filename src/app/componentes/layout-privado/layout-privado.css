@@ -1,0 +1,11 @@
+/* Cancel the body's landing-nav margin when inside the private zone */
+:host {
+  display: block;
+  margin-top: -75px;
+  min-height: 100vh;
+  background-color: var(--ss-bg);
+}
+
+.lp-main {
+  padding: 24px;
+}

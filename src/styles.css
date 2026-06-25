@@ -46,10 +46,23 @@
   --label-font-weight: 500;
 
   --line-height: 1.5;
+
+  /* SkillSwap Design Tokens */
+  --ss-primary: #005A9C;
+  --ss-accent: #FFC107;
+  --ss-bg: #F5F7FA;
+  --ss-surface: #FFFFFF;
+  --ss-text: #212529;
+  --ss-success: #28A745;
+  --ss-danger: #DC3545;
+  --ss-radius: 12px;
+  --ss-font: 'Inter', system-ui, sans-serif;
 }
 
 body {
-  background-color: #f7f9fc; /* Un fondo gris muy claro */
+  background-color: var(--ss-bg);
+  color: var(--ss-text);
+  font-family: var(--ss-font);
   margin-top: 75px; /* Espacio para la barra de navegación fija */
 }
 
@@ -106,12 +119,12 @@ body {
   list-style: none;
   text-decoration: none;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   color: black;
   width: 100%;
   padding: 0;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
 }
 
 .menu-horizontal-opciones li a {
@@ -129,26 +142,22 @@ body {
 
 .btn-iniciarsesion {
   border-radius: 50px;
-  padding: 10px 24px;
+  padding: 6px 14px;
   font-size: 14px;
-  font-weight: 600;
   background-color: #005a9c;
   color: white;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 90, 156, 0.3);
 }
 
 .btn-registrase {
   border-radius: 50px;
-  padding: 10px 24px;
+  padding: 6px 10px;
   font-size: 14px;
-  font-weight: 600;
   background-color: #ffc107;
-  color: #212529;
+  color: white;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
 }
 
 .menu-vertical-lp {
@@ -216,26 +225,6 @@ body {
   max-width: 200px;
 }
 
-@keyframes ondular {
-  0%   { transform: rotate(0deg) scale(1); }
-  25%  { transform: rotate(-5deg) scale(1.05); }
-  50%  { transform: rotate(5deg) scale(1.1); }
-  75%  { transform: rotate(-3deg) scale(1.05); }
-  100% { transform: rotate(0deg) scale(1); }
-}
-
-.logo img:hover {
-  animation: ondular 0.6s ease-in-out;
-}
-
-.logo img:hover {
-  animation: ola 0.8s ease-in-out;
-}
-
-.logo img:hover {
-  animation: ondular 0.6s ease-in-out;
-}
-
 .seccion-llamado-accion {
   padding-top: 75px;
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -253,16 +242,6 @@ body {
   text-align: center;
   font-size: 48px;
   width: 80%;
-  letter-spacing: 2px;
-  line-height: 1.3;
-}
-
-@media (max-width: 768px) {
-  .llamado-accion-texto {
-    font-size: 28px;
-    width: 90%;
-    letter-spacing: 1px;
-  }
 }
 
 .llamado-accion-boton {
@@ -7050,6 +7029,241 @@ body.dark-mode .creditos-container {
 
   /* O simplemente un valor fijo alto si no quieres calcular */
   /* min-height: 70vh; */
+}
+
+/* ============================================================
+   SKILLSWAP UTILITY CLASSES — v2 refined
+   ============================================================ */
+
+/* Card */
+.ss-card {
+  background-color: var(--ss-surface);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.ss-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 16px 32px rgba(0, 0, 0, 0.07);
+}
+
+/* Buttons */
+.ss-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--ss-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 24px;
+  font-family: var(--ss-font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 90, 156, 0.22);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+.ss-btn-primary:hover {
+  background-color: #004a80;
+  box-shadow: 0 4px 14px rgba(0, 90, 156, 0.32);
+  transform: translateY(-1px);
+}
+.ss-btn-primary:active { transform: translateY(0); }
+
+.ss-btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--ss-accent);
+  color: #212529;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 24px;
+  font-family: var(--ss-font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.ss-btn-accent:hover {
+  background-color: #e0a800;
+  transform: translateY(-1px);
+}
+
+.ss-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  color: var(--ss-primary);
+  border: 2px solid var(--ss-primary);
+  border-radius: 999px;
+  padding: 9px 22px;
+  font-family: var(--ss-font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+.ss-btn-outline:hover {
+  background-color: var(--ss-primary);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Chip (habilidades / temas) */
+.ss-chip {
+  display: inline-block;
+  background-color: rgba(255, 193, 7, 0.15);
+  color: #7a5a00;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 193, 7, 0.38);
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+.ss-chip:hover {
+  background-color: rgba(255, 193, 7, 0.28);
+  transform: translateY(-1px);
+}
+
+/* Status pills — tinted modern style */
+.ss-pill-status-ok {
+  display: inline-block;
+  background-color: #d1fae5;
+  color: #065f46;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid #6ee7b7;
+}
+
+.ss-pill-status-pending {
+  display: inline-block;
+  background-color: #fef3c7;
+  color: #92400e;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid #fcd34d;
+}
+
+.ss-pill-status-danger {
+  display: inline-block;
+  background-color: #fee2e2;
+  color: #991b1b;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid #fca5a5;
+}
+
+/* Star rating */
+.ss-star {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ss-accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+.ss-star::before { content: '★'; }
+
+/* Verified badge */
+.ss-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ss-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+.ss-verified::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, var(--ss-primary), #0076d1);
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Input / Textarea */
+.ss-input {
+  width: 100%;
+  padding: 11px 16px;
+  font-family: var(--ss-font);
+  font-size: 14px;
+  color: var(--ss-text);
+  background-color: var(--ss-surface);
+  border: 1.5px solid rgba(0, 0, 0, 0.13);
+  border-radius: 10px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ss-input:focus {
+  outline: none;
+  border-color: var(--ss-primary);
+  box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.14);
+}
+
+/* Icon action buttons */
+.ss-btn-icon-ok {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--ss-success);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+.ss-btn-icon-ok::before { content: '✓'; }
+.ss-btn-icon-ok:hover {
+  background-color: #1e7e34;
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.38);
+}
+
+.ss-btn-icon-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--ss-danger);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+.ss-btn-icon-no::before { content: '✗'; }
+.ss-btn-icon-no:hover {
+  background-color: #bd2130;
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.38);
 }
 
 

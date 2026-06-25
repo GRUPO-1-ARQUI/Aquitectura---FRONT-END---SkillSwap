@@ -1,0 +1,207 @@
+.vc-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Encabezado */
+.vc-page-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.vc-titulo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ss-text);
+  margin: 0;
+}
+
+.vc-contador {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Estados vacío / cargando */
+.vc-state {
+  text-align: center;
+  color: #6c757d;
+  padding: 40px;
+}
+
+.vc-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.vc-empty-icon { font-size: 40px; margin: 0; }
+.vc-empty-txt  { font-size: 16px; font-weight: 600; color: var(--ss-text); margin: 0; }
+.vc-empty-sub  { font-size: 14px; color: #6c757d; margin: 0; }
+
+/* Lista */
+.vc-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Card */
+.vc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 20px;
+  transition: opacity 0.4s ease;
+}
+
+.vc-card--confirmado {
+  opacity: 0.7;
+}
+
+/* Cabecera de la card: avatar + info + pill */
+.vc-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.vc-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ss-primary) 0%, #0076d1 100%);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0, 90, 156, 0.28);
+}
+
+.vc-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vc-nombre {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ss-text);
+  margin: 0;
+}
+
+.vc-email {
+  font-size: 13px;
+  color: #6c757d;
+  margin: 0;
+}
+
+.vc-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.vc-no-verificado {
+  font-size: 12px;
+  font-weight: 600;
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+.vc-estado-pill {
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+/* Fila de detalles de la verificación */
+.vc-detalle {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  background-color: var(--ss-bg);
+  border-radius: 8px;
+  font-size: 14px;
+  color: #444;
+}
+
+.vc-detalle-item {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.vc-label {
+  font-weight: 600;
+  color: #555;
+}
+
+/* Zona de acciones */
+.vc-acciones {
+  display: flex;
+  gap: 12px;
+  padding-top: 2px;
+}
+
+.vc-accion-btn {
+  width: auto !important;
+  height: 36px;
+  padding: 0 18px 0 12px;
+  border-radius: 999px !important;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex !important;
+  align-items: center;
+}
+
+.vc-accion-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error inline */
+.vc-error {
+  font-size: 13px;
+  color: #dc3545;
+  margin: 0;
+}
+
+/* Confirmación tras acción */
+.vc-confirm-ok,
+.vc-confirm-err {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vc-confirm-ok {
+  background-color: #d1e7dd;
+  color: #0a3622;
+  border-left: 4px solid #198754;
+}
+
+.vc-confirm-err {
+  background-color: #f8d7da;
+  color: #58151c;
+  border-left: 4px solid #dc3545;
+}

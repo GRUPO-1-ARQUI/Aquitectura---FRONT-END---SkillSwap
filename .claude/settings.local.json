@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ng serve *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4200/)",
+      "PowerShell(Get-Content *)",
+      "PowerShell($pids = \\(netstat -ano | Select-String \":8080 \"\\) | ForEach-Object { \\($_ -split '\\\\s+'\\)[-1] } | Sort-Object -Unique; $pids | ForEach-Object { Write-Host \"Killing PID $_\"; Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Start-Sleep -Seconds 2; Write-Host \"Port 8080 cleared\")",
+      "PowerShell($env:PGPASSWORD=\"postgre\"; & \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -d innovify_db -c \"SELECT id_usuario, nombre_completo, correo_institucional, rol, verificado FROM usuarios ORDER BY id_usuario;\" 2>&1)",
+      "PowerShell(Select-String *)"
+    ]
+  }
+}

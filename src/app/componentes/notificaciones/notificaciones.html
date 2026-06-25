@@ -1,0 +1,38 @@
+<div class="notif-page">
+  <h1 class="notif-titulo">Notificaciones</h1>
+
+  @if (cargando()) {
+    <div class="notif-state">Cargando...</div>
+  } @else if (notificaciones().length === 0) {
+    <div class="notif-empty ss-card">
+      <p class="notif-empty-icon">🔔</p>
+      <p class="notif-empty-txt">Sin notificaciones</p>
+      <p class="notif-empty-sub">Cuando recibas una solicitud o actualización aparecerá aquí.</p>
+    </div>
+  } @else {
+    <div class="notif-lista">
+      @for (n of notificaciones(); track n.idNotificacion) {
+        <div class="ss-card notif-card"
+             [class.notif-card--nueva]="!n.leido"
+             (click)="marcarLeida(n)">
+
+          <div class="notif-card-left">
+            <span class="notif-icono">{{ iconoPorTipo(n.tipo) }}</span>
+            <div>
+              <p class="notif-tipo">{{ n.tipo }}</p>
+              <p class="notif-contenido">{{ n.contenido }}</p>
+            </div>
+          </div>
+
+          <div class="notif-card-right">
+            @if (!n.leido) {
+              <span class="notif-badge-nueva">Nueva</span>
+            } @else {
+              <span class="notif-leida-icon">✓</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,102 @@
+<div class="vc-page">
+  <!-- Encabezado -->
+  <div class="vc-page-header">
+    <h1 class="vc-titulo">Verificaciones pendientes</h1>
+    @if (!cargando()) {
+      <span class="vc-contador">
+        {{ verificaciones().length }} pendiente{{ verificaciones().length !== 1 ? 's' : '' }}
+      </span>
+    }
+  </div>
+
+  <!-- Cargando -->
+  @if (cargando()) {
+    <div class="vc-state">Cargando verificaciones...</div>
+
+  <!-- Sin pendientes -->
+  } @else if (verificaciones().length === 0) {
+    <div class="vc-empty ss-card">
+      <p class="vc-empty-icon">✅</p>
+      <p class="vc-empty-txt">No hay verificaciones pendientes.</p>
+      <p class="vc-empty-sub">Todas las solicitudes han sido procesadas.</p>
+    </div>
+
+  <!-- Lista -->
+  } @else {
+    <div class="vc-lista">
+      @for (item of verificaciones(); track item.verificacion.idVerificacion) {
+        <div class="ss-card vc-card"
+             [class.vc-card--confirmado]="item.confirmacion !== null">
+
+          <!-- Avatar + datos estudiante -->
+          <div class="vc-card-top">
+            <div class="vc-avatar">{{ inicial(item.estudiante?.nombre) }}</div>
+
+            <div class="vc-info">
+              <h3 class="vc-nombre">
+                {{ item.estudiante?.nombre ?? 'Estudiante #' + item.verificacion.idUsuario }}
+              </h3>
+              <p class="vc-email">{{ item.estudiante?.email ?? '—' }}</p>
+              <div class="vc-badges">
+                @if (item.estudiante?.verificado) {
+                  <span class="ss-verified">verificado</span>
+                } @else {
+                  <span class="vc-no-verificado">no verificado</span>
+                }
+                @if (item.estudiante?.estado) {
+                  <span class="ss-chip">{{ item.estudiante!.estado }}</span>
+                }
+              </div>
+            </div>
+
+            <!-- Estado verificación -->
+            <span class="ss-pill-status-pending vc-estado-pill">pendiente</span>
+          </div>
+
+          <!-- Detalle de la verificación -->
+          <div class="vc-detalle">
+            <span class="vc-detalle-item">
+              <span class="vc-label">ID solicitud:</span>
+              #{{ item.verificacion.idVerificacion }}
+            </span>
+            @if (item.verificacion.fecha) {
+              <span class="vc-detalle-item">
+                <span class="vc-label">Fecha:</span>
+                {{ item.verificacion.fecha | date:'dd/MM/yyyy HH:mm' }}
+              </span>
+            }
+          </div>
+
+          <!-- Zona de acciones -->
+          @if (item.confirmacion !== null) {
+            <!-- Confirmación tras acción -->
+            <div [class]="item.confirmacion === 'aprobado' ? 'vc-confirm-ok' : 'vc-confirm-err'">
+              @if (item.confirmacion === 'aprobado') {
+                ✓ Verificación aprobada correctamente
+              } @else {
+                ✗ Verificación rechazada
+              }
+            </div>
+
+          } @else {
+            @if (item.error) {
+              <p class="vc-error">{{ item.error }}</p>
+            }
+            <div class="vc-acciones">
+              <button class="ss-btn-icon-ok vc-accion-btn"
+                      [disabled]="item.procesando"
+                      (click)="aprobar(item)">
+                Aprobar
+              </button>
+              <button class="ss-btn-icon-no vc-accion-btn"
+                      [disabled]="item.procesando"
+                      (click)="rechazar(item)">
+                Rechazar
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
