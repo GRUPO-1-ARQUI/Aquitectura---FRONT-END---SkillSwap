@@ -1,0 +1,71 @@
+<div class="st-page">
+  <div class="st-page-header">
+    <h1 class="st-titulo">Solicitudes recibidas</h1>
+    @if (!cargando()) {
+      <span class="st-contador">{{ solicitudes().length }} solicitud{{ solicitudes().length !== 1 ? 'es' : '' }}</span>
+    }
+  </div>
+
+  @if (cargando()) {
+    <div class="st-state">Cargando solicitudes...</div>
+
+  } @else if (solicitudes().length === 0) {
+    <div class="st-empty ss-card">
+      <p class="st-empty-icon">📭</p>
+      <p class="st-empty-txt">No has recibido solicitudes aún.</p>
+      <p class="st-empty-sub">Cuando un aprendiz te contacte, aparecerá aquí.</p>
+    </div>
+
+  } @else {
+    <div class="st-lista">
+      @for (item of solicitudes(); track item.solicitud.idSolicitud) {
+        <div class="ss-card st-card">
+
+          <!-- Cabecera: aprendiz + estado -->
+          <div class="st-card-header">
+            <div class="st-avatar">
+              {{ item.aprendizNombre.charAt(0).toUpperCase() }}
+            </div>
+
+            <div class="st-aprendiz-info">
+              <h3 class="st-aprendiz-nombre">{{ item.aprendizNombre }}</h3>
+              <p class="st-aprendiz-correo">{{ item.aprendizCorreo }}</p>
+              @if (item.aprendizReputacion) {
+                <span class="ss-star st-rating">{{ rating(item.aprendizReputacion) }}</span>
+              }
+            </div>
+
+            <span [class]="pillClass(item.solicitud.estado)" class="st-pill">
+              {{ item.solicitud.estado ?? 'pendiente' }}
+            </span>
+          </div>
+
+          <!-- Habilidad solicitada -->
+          <div class="st-habilidad-row">
+            <span class="st-label">Habilidad solicitada:</span>
+            <span class="ss-chip">{{ item.habilidadNombre }}</span>
+          </div>
+
+          <!-- Mensaje del aprendiz -->
+          <p class="st-mensaje">{{ item.solicitud.mensaje }}</p>
+
+          <!-- Acciones: solo para pendientes -->
+          @if (esPendiente(item.solicitud.estado)) {
+            <div class="st-acciones">
+              <button class="ss-btn-icon-ok st-accion-btn"
+                      [disabled]="item.procesando"
+                      (click)="aceptar(item)">
+                Aceptar
+              </button>
+              <button class="ss-btn-icon-no st-accion-btn"
+                      [disabled]="item.procesando"
+                      (click)="rechazar(item)">
+                Rechazar
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

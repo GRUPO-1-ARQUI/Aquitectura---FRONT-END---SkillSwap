@@ -1,0 +1,156 @@
+<div class="pt-page">
+
+  <!-- Volver -->
+  <a routerLink="/app/buscar" class="pt-back ss-btn-outline">← Volver</a>
+
+  @if (cargando()) {
+    <div class="pt-loading">Cargando perfil...</div>
+  } @else if (!tutor()) {
+    <div class="pt-loading">Tutor no encontrado.</div>
+  } @else {
+    <!-- Tarjeta principal -->
+    <div class="ss-card pt-card">
+
+      <!-- Acciones arriba derecha -->
+      <div class="pt-top-actions">
+        <button class="pt-icon-btn" title="Modo oscuro (decorativo)">🌙</button>
+        <button class="pt-icon-btn pt-heart" [class.pt-heart--on]="esFavorito()"
+                (click)="esFavorito.update(v => !v)">
+          {{ esFavorito() ? '♥' : '♡' }}
+        </button>
+      </div>
+
+      <div class="pt-layout">
+        <!-- Columna izquierda -->
+        <div class="pt-col-left">
+          <div class="pt-avatar-grande">{{ inicial() }}</div>
+          <span class="ss-verified">Tutor Verificado</span>
+
+          @if (promedioStr()) {
+            <span class="ss-star pt-star">{{ promedioStr() }} estrellas</span>
+          } @else {
+            <span class="pt-no-rating">Sin calificaciones aún</span>
+          }
+
+          <!-- Mini estrellas -->
+          <div class="pt-star-row">
+            @for (n of starRange; track n) {
+              <span [class.pt-star-fill]="n <= (promedio() ?? 0)">★</span>
+            }
+          </div>
+
+          <button class="ss-btn-primary pt-solicitar-btn" (click)="abrirModal()">
+            Solicitar Tutoría
+          </button>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="pt-col-right">
+          <h2 class="pt-nombre">{{ tutor()!.nombreCompleto }}</h2>
+
+          <div class="pt-info-grid">
+            <p><strong>Universidad:</strong> {{ institucionNombre() }}</p>
+            <p><strong>Carrera:</strong> No especificada</p>
+            <p><strong>Disponibilidad:</strong> Por acordar</p>
+          </div>
+
+          @if (habilidades().length > 0) {
+            <div class="pt-section">
+              <p class="pt-section-label">Temas de dominio:</p>
+              <div class="pt-chips-row">
+                @for (h of habilidades(); track h.id) {
+                  <span class="ss-chip">{{ h.nombre }}</span>
+                }
+              </div>
+            </div>
+          }
+
+          @if (tutor()!.biografia) {
+            <div class="pt-section">
+              <p class="pt-section-label">Descripción:</p>
+              <p class="pt-bio">{{ tutor()!.biografia }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Reseñas -->
+    <section class="pt-resenas">
+      <h3 class="pt-resenas-titulo">Reseñas</h3>
+      @if (resenas().length === 0) {
+        <p class="pt-resenas-vacio">Este tutor aún no tiene reseñas.</p>
+      } @else {
+        <div class="pt-resenas-lista">
+          @for (rv of resenas(); track rv.resena.idResena) {
+            <div class="ss-card pt-resena-card">
+              <div class="pt-resena-header">
+                <div class="pt-resena-avatar">{{ rv.evaluadorNombre.charAt(0).toUpperCase() }}</div>
+                <div>
+                  <p class="pt-resena-autor">{{ rv.evaluadorNombre }}</p>
+                  <div class="pt-resena-stars">
+                    @for (n of starRange; track n) {
+                      <span [class.pt-star-fill]="n <= rv.resena.calificacion">★</span>
+                    }
+                  </div>
+                </div>
+              </div>
+              @if (rv.resena.comentario) {
+                <p class="pt-resena-comentario">{{ rv.resena.comentario }}</p>
+              }
+            </div>
+          }
+        </div>
+      }
+    </section>
+  }
+
+  <!-- Modal: Solicitar Tutoría -->
+  @if (modalAbierto()) {
+    <div class="pt-modal-backdrop" (click)="cerrarModal()">
+      <div class="ss-card pt-modal" (click)="$event.stopPropagation()">
+        <div class="pt-modal-header">
+          <h3>Solicitar tutoría</h3>
+          <button class="pt-modal-close" (click)="cerrarModal()">✕</button>
+        </div>
+
+        @if (solicitudOk()) {
+          <p class="pt-modal-ok">¡Solicitud enviada con éxito!</p>
+        } @else {
+          <div class="pt-modal-body">
+
+            <!-- Habilidad: obligatorio, lista completa del sistema -->
+            <label class="pt-modal-label" for="habSel">Habilidad</label>
+            <select id="habSel"
+                    class="ss-input pt-modal-select"
+                    [(ngModel)]="habilidadSeleccionada"
+                    name="habSel">
+              <option [ngValue]="null">— Selecciona una habilidad —</option>
+              @for (h of todasHabilidades(); track h.idHabilidad) {
+                <option [ngValue]="h.idHabilidad">{{ h.nombre }}</option>
+              }
+            </select>
+
+            <label class="pt-modal-label" for="mensaje">Mensaje</label>
+            <textarea id="mensaje"
+                      class="ss-input pt-modal-textarea"
+                      [(ngModel)]="mensajeSolicitud"
+                      name="mensaje"
+                      placeholder="Ej: Hola, me gustaría aprender sobre este tema porque..."
+                      rows="4"></textarea>
+
+            @if (solicitudErr()) {
+              <p class="pt-modal-err">{{ solicitudErr() }}</p>
+            }
+
+            <button class="ss-btn-primary pt-modal-submit"
+                    [disabled]="enviando()"
+                    (click)="enviar()">
+              {{ enviando() ? 'Enviando...' : 'Enviar' }}
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

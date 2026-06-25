@@ -1,39 +1,35 @@
-<nav class="barra-navegacion">
-  <div class="menu-hamburguesa" id="btn-menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+@if (!isPrivateZone()) {
+  <nav class="barra-navegacion">
+    <div class="menu-hamburguesa" id="btn-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
-  <div class="logo">
-    <a routerLink="/home">
-      <img src="images/SkillSwap_logo.png" alt="Logo" />
-    </a>
-  </div>
+    <div class="logo">
+      <a routerLink="/home">
+        <img src="images/SkillSwap_logo.png" alt="Logo" />
+      </a>
+    </div>
 
-  <div class="menu-horizontal">
-    <ul class="menu-horizontal-opciones">
-      <li>
-        <a routerLink="/alianzas">Alianzas</a>
-      </li>
-      <li>
-        <a routerLink="/proyectos">Proyectos</a>
-      </li>
-      <li>
-        <a routerLink="/nosotros">Sobre nosotros</a>
-      </li>
-      <li>
-        <a routerLink="/login">
-          <button class="btn-iniciarsesion">Iniciar Sesion</button>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/registrar">
-          <button class="btn-registrase">Registrarse</button>
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
+    <div class="menu-horizontal">
+      <ul class="menu-horizontal-opciones">
+        <li><a routerLink="/alianzas">Alianzas</a></li>
+        <li><a routerLink="/proyectos">Proyectos</a></li>
+        <li><a routerLink="/nosotros">Sobre nosotros</a></li>
+        <li>
+          <a routerLink="/login">
+            <button class="btn-iniciarsesion">Iniciar Sesion</button>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/registrar">
+            <button class="btn-registrase">Registrarse</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+}
 
 <router-outlet></router-outlet>
