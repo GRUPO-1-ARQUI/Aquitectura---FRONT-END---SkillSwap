@@ -106,12 +106,12 @@ body {
   list-style: none;
   text-decoration: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
   color: black;
   width: 100%;
   padding: 0;
   align-items: center;
-  gap: 20px;
+  gap: 8px;
 }
 
 .menu-horizontal-opciones li a {
@@ -129,22 +129,26 @@ body {
 
 .btn-iniciarsesion {
   border-radius: 50px;
-  padding: 6px 14px;
+  padding: 10px 24px;
   font-size: 14px;
+  font-weight: 600;
   background-color: #005a9c;
   color: white;
   border: none;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 90, 156, 0.3);
 }
 
 .btn-registrase {
   border-radius: 50px;
-  padding: 6px 10px;
+  padding: 10px 24px;
   font-size: 14px;
+  font-weight: 600;
   background-color: #ffc107;
-  color: white;
+  color: #212529;
   border: none;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
 }
 
 .menu-vertical-lp {
@@ -212,6 +216,26 @@ body {
   max-width: 200px;
 }
 
+@keyframes ondular {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(-5deg) scale(1.05); }
+  50%  { transform: rotate(5deg) scale(1.1); }
+  75%  { transform: rotate(-3deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.logo img:hover {
+  animation: ondular 0.6s ease-in-out;
+}
+
+.logo img:hover {
+  animation: ola 0.8s ease-in-out;
+}
+
+.logo img:hover {
+  animation: ondular 0.6s ease-in-out;
+}
+
 .seccion-llamado-accion {
   padding-top: 75px;
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -229,6 +253,16 @@ body {
   text-align: center;
   font-size: 48px;
   width: 80%;
+  letter-spacing: 2px;
+  line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+  .llamado-accion-texto {
+    font-size: 28px;
+    width: 90%;
+    letter-spacing: 1px;
+  }
 }
 
 .llamado-accion-boton {
