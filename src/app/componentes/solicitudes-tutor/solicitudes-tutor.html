@@ -49,6 +49,15 @@
           <!-- Mensaje del aprendiz -->
           <p class="st-mensaje">{{ item.solicitud.mensaje }}</p>
 
+          <!-- Estado de créditos (US51) -->
+          @if (esCompletada(item.solicitud.estado)) {
+            @if (item.yaCalificado) {
+              <span class="ss-pill-status-ok st-pill st-pill-creditos">Créditos otorgados</span>
+            } @else {
+              <span class="ss-pill-status-pending st-pill st-pill-creditos">Pendiente de calificación del aprendiz</span>
+            }
+          }
+
           <!-- Acciones: solo para pendientes -->
           @if (esPendiente(item.solicitud.estado)) {
             <div class="st-acciones">

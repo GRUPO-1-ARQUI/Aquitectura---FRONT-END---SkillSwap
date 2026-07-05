@@ -7202,6 +7202,25 @@ body.dark-mode .creditos-container {
   font-weight: 700;
 }
 
+/* Pending verification badge */
+.ss-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #888;
+  font-size: 13px;
+  font-weight: 600;
+}
+.ss-pending::before {
+  content: '⏳';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+}
+
 /* Input / Textarea */
 .ss-input {
   width: 100%;

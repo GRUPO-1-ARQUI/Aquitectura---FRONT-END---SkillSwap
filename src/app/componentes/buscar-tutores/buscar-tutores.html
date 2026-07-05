@@ -51,9 +51,9 @@
         <div class="ss-card bt-card" (click)="irAPerfil(item.tutor.idUsuario)">
 
           <!-- Corazón -->
-          <button class="bt-heart" [class.bt-heart--on]="favoritos().has(item.tutor.idUsuario)"
+          <button class="bt-heart" [class.bt-heart--on]="esFavorito(item.tutor.idUsuario)"
                   (click)="toggleFavorito(item.tutor.idUsuario, $event)">
-            {{ favoritos().has(item.tutor.idUsuario) ? '♥' : '♡' }}
+            {{ esFavorito(item.tutor.idUsuario) ? '♥' : '♡' }}
           </button>
 
           <!-- Avatar -->

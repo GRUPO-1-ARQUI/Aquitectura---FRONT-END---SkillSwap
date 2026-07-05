@@ -1,0 +1,35 @@
+<div class="mf-page">
+  <h1 class="mf-titulo">Mis Favoritos</h1>
+
+  @if (cargando()) {
+    <div class="mf-state-msg">Cargando tus tutores favoritos...</div>
+  } @else if (tutores().length === 0) {
+    <div class="mf-state-msg">Todavía no marcaste ningún tutor como favorito.</div>
+  } @else {
+    <div class="mf-grid">
+      @for (item of tutores(); track item.tutor.idUsuario) {
+        <div class="ss-card mf-card" (click)="irAPerfil(item.tutor.idUsuario)">
+
+          <button class="mf-heart" (click)="quitar(item.tutor.idUsuario, $event)" aria-label="Quitar de favoritos">♥</button>
+
+          <div class="mf-avatar">{{ item.tutor.nombreCompleto.charAt(0).toUpperCase() }}</div>
+
+          <h3 class="mf-nombre">{{ item.tutor.nombreCompleto }}</h3>
+          <p class="mf-detalle"><strong>Universidad:</strong> {{ item.institucionNombre }}</p>
+
+          @if (item.habilidadNombres.length > 0) {
+            <div class="mf-skills">
+              @for (skill of item.habilidadNombres.slice(0, 3); track skill) {
+                <span class="ss-chip mf-skill-chip">{{ skill }}</span>
+              }
+            </div>
+          }
+
+          <div class="mf-card-footer">
+            <span class="ss-star">{{ rating(item.tutor.reputacionPromedio) }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

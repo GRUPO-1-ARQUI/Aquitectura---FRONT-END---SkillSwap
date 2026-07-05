@@ -8,10 +8,11 @@ import { UsuarioService } from '../../services/usuario.service';
 import { UsuarioHabilidadService } from '../../services/usuario-habilidad.service';
 import { InstitucionService } from '../../services/institucion.service';
 import { SesionService } from '../../services/sesion.service';
+import { FavoritoService } from '../../services/favorito.service';
 import { Habilidad } from '../../models/habilidad.model';
 import { Usuario } from '../../models/usuario.model';
 import { Institucion } from '../../models/institucion.model';
-import { UsuarioHabilidad } from '../../models/usuario-habilidad.model';
+import { UsuarioHabilidad, TIPO_HABILIDAD_ENSENAR } from '../../models/usuario-habilidad.model';
 
 interface TutorCard {
   tutor: Usuario;
@@ -34,12 +35,12 @@ export class BuscarTutoresComponent implements OnInit {
   private readonly institucionSvc = inject(InstitucionService);
   private readonly sesion = inject(SesionService);
   private readonly router = inject(Router);
+  private readonly favoritoSvc = inject(FavoritoService);
 
   readonly habilidades = signal<Habilidad[]>([]);
   private readonly tutoresList = signal<TutorCard[]>([]);
   readonly cargando = signal(true);
   readonly chipSeleccionado = signal<number | null>(null);
-  readonly favoritos = signal(new Set<number>());
 
   // getter/setter pattern so ngModel writes to the signal and computed() reacts
   private readonly _busqueda = signal('');
@@ -63,6 +64,9 @@ export class BuscarTutoresComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    const uid = this.sesion.getUserId();
+    if (uid) this.favoritoSvc.cargar(uid);
+
     forkJoin({
       habilidades: this.habilidadSvc.getAll().pipe(catchError(() => of([] as Habilidad[]))),
       usuarios: this.usuarioSvc.getAll().pipe(catchError(() => of([] as Usuario[]))),
@@ -88,12 +92,20 @@ export class BuscarTutoresComponent implements OnInit {
             .pipe(catchError(() => of([] as UsuarioHabilidad[])))
         )
       ).subscribe(skillsLists => {
-        this.tutoresList.set(tutores.map((t, i) => ({
-          tutor: t,
-          habilidadNombres: skillsLists[i].map(s => habilidadesMap.get(s.idHabilidad) ?? '?'),
-          habilidadIds: skillsLists[i].map(s => s.idHabilidad),
-          institucionNombre: instMap.get(t.idInstitucion ?? 0) ?? 'Sin institución',
-        })));
+        this.tutoresList.set(
+          tutores
+            .map((t, i) => {
+              const ensena = skillsLists[i].filter(s => s.tipo === TIPO_HABILIDAD_ENSENAR);
+              return {
+                tutor: t,
+                habilidadNombres: ensena.map(s => habilidadesMap.get(s.idHabilidad) ?? '?'),
+                habilidadIds: ensena.map(s => s.idHabilidad),
+                institucionNombre: instMap.get(t.idInstitucion ?? 0) ?? 'Sin institución',
+              };
+            })
+            // Un tutor sin "Habilidades para Enseñar" no debe aparecer en resultados (US13)
+            .filter(item => item.habilidadIds.length > 0),
+        );
         this.cargando.set(false);
       });
     });
@@ -104,13 +116,15 @@ export class BuscarTutoresComponent implements OnInit {
     this.chipSeleccionado.update(c => c === id ? null : id);
   }
 
-  toggleFavorito(id: number, event: Event): void {
+  toggleFavorito(idTutor: number, event: Event): void {
     event.stopPropagation();
-    this.favoritos.update(set => {
-      const next = new Set(set);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
+    const uid = this.sesion.getUserId();
+    if (!uid) return;
+    this.favoritoSvc.toggle(uid, idTutor);
+  }
+
+  esFavorito(idTutor: number): boolean {
+    return this.favoritoSvc.esFavorito(idTutor);
   }
 
   irAPerfil(id: number): void {

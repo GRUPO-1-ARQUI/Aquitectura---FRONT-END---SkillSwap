@@ -18,6 +18,7 @@ export class LayoutPrivadoComponent {
     if (rol === 'tutor') {
       return [
         { label: 'Solicitudes', path: '/app/solicitudes' },
+        { label: 'Mi Perfil', path: '/app/perfil' },
         { label: 'Notificaciones', path: '/app/notificaciones' },
       ];
     }
@@ -29,6 +30,8 @@ export class LayoutPrivadoComponent {
     return [
       { label: 'Buscar tutores', path: '/app/buscar' },
       { label: 'Mis solicitudes', path: '/app/mis-solicitudes' },
+      { label: 'Mis Favoritos', path: '/app/favoritos' },
+      { label: 'Mi Perfil', path: '/app/perfil' },
       { label: 'Notificaciones', path: '/app/notificaciones' },
     ];
   }

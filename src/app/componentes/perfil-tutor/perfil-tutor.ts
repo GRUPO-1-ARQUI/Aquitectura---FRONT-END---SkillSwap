@@ -10,10 +10,11 @@ import { ResenaService } from '../../services/resena.service';
 import { SolicitudService } from '../../services/solicitud.service';
 import { InstitucionService } from '../../services/institucion.service';
 import { SesionService } from '../../services/sesion.service';
+import { FavoritoService } from '../../services/favorito.service';
 import { Usuario } from '../../models/usuario.model';
 import { Habilidad } from '../../models/habilidad.model';
 import { Institucion } from '../../models/institucion.model';
-import { UsuarioHabilidad } from '../../models/usuario-habilidad.model';
+import { UsuarioHabilidad, TIPO_HABILIDAD_ENSENAR } from '../../models/usuario-habilidad.model';
 import { Resena } from '../../models/resena.model';
 
 interface HabilidadOpcion { id: number; nombre: string; }
@@ -35,6 +36,7 @@ export class PerfilTutorComponent implements OnInit {
   private readonly solicitudSvc = inject(SolicitudService);
   private readonly institucionSvc = inject(InstitucionService);
   private readonly sesion = inject(SesionService);
+  private readonly favoritoSvc = inject(FavoritoService);
 
   readonly tutor = signal<Usuario | null>(null);
   readonly promedio = signal<number | null>(null);
@@ -43,7 +45,7 @@ export class PerfilTutorComponent implements OnInit {
   readonly institucionNombre = signal('Sin institución');
   readonly resenas = signal<ResenaVista[]>([]);
   readonly cargando = signal(true);
-  readonly esFavorito = signal(false);
+  readonly esFavorito = computed(() => this.favoritoSvc.esFavorito(this.tutorId));
 
   readonly promedioStr = computed(() => {
     const p = this.promedio();
@@ -74,6 +76,9 @@ export class PerfilTutorComponent implements OnInit {
     const id = this.tutorId;
     if (!id) return;
 
+    const uid = this.sesion.getUserId();
+    if (uid) this.favoritoSvc.cargar(uid);
+
     forkJoin({
       tutor: this.usuarioSvc.getById(id).pipe(catchError(() => of(null))),
       promedio: this.resenaSvc.getPromedio(id).pipe(catchError(() => of(null))),
@@ -95,13 +100,15 @@ export class PerfilTutorComponent implements OnInit {
       // Todas las habilidades del sistema → para el select del modal
       this.todasHabilidades.set(todasHabs as Habilidad[]);
 
-      // Solo las habilidades que domina el tutor → chips del perfil
+      // Solo las habilidades para enseñar del tutor → chips del perfil
       const habMap = new Map((todasHabs as Habilidad[]).map(h => [h.idHabilidad, h.nombre]));
       this.habilidades.set(
-        (tutorHabs as UsuarioHabilidad[]).map(h => ({
-          id: h.idHabilidad,
-          nombre: habMap.get(h.idHabilidad) ?? '?',
-        }))
+        (tutorHabs as UsuarioHabilidad[])
+          .filter(h => h.tipo === TIPO_HABILIDAD_ENSENAR)
+          .map(h => ({
+            id: h.idHabilidad,
+            nombre: habMap.get(h.idHabilidad) ?? '?',
+          }))
       );
 
       const resenasList = resenas as Resena[];
@@ -125,6 +132,12 @@ export class PerfilTutorComponent implements OnInit {
         this.cargando.set(false);
       });
     });
+  }
+
+  toggleFavorito(): void {
+    const uid = this.sesion.getUserId();
+    if (!uid) return;
+    this.favoritoSvc.toggle(uid, this.tutorId);
   }
 
   abrirModal(): void {
