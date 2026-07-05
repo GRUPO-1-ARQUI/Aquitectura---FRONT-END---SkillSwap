@@ -1,0 +1,207 @@
+.bt-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+.bt-header h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ss-text);
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+/* Search row */
+.bt-search-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.bt-search-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.bt-lupa {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  pointer-events: none;
+}
+
+.bt-search-input {
+  padding-left: 40px;
+  border-radius: 999px;
+}
+
+.bt-filtros-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  border-radius: 999px;
+  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bt-filtros-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Chips row */
+.bt-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bt-chip {
+  cursor: pointer;
+  border: none;
+  font-family: var(--ss-font);
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.bt-chip:hover { filter: brightness(0.92); }
+
+.bt-chip--active {
+  outline: 2px solid var(--ss-primary);
+  outline-offset: 2px;
+}
+
+/* State messages */
+.bt-state-msg {
+  text-align: center;
+  color: #6c757d;
+  padding: 56px 24px;
+  font-size: 15px;
+}
+
+/* Grid */
+.bt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 680px) {
+  .bt-grid { grid-template-columns: 1fr; }
+}
+
+/* Tutor card */
+.bt-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 28px 20px 18px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bt-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Heart */
+.bt-heart {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #ccc;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.bt-heart--on { color: var(--ss-danger); }
+.bt-heart:hover { color: var(--ss-danger); }
+.bt-heart:hover {
+  transform: scale(1.2);
+}
+
+/* Avatar */
+.bt-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ss-primary) 0%, #0076d1 100%);
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+  box-shadow: 0 4px 12px rgba(0, 90, 156, 0.28);
+}
+
+.bt-nombre {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ss-text);
+  text-align: center;
+  margin: 0;
+}
+
+.bt-detalle {
+  font-size: 13px;
+  color: #555;
+  margin: 0;
+  text-align: center;
+}
+
+/* Skills */
+.bt-skills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.bt-skills-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+}
+
+.bt-skill-chip {
+  font-size: 11px;
+  padding: 3px 10px;
+}
+
+/* Card footer */
+.bt-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.bt-online-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--ss-success);
+  display: inline-block;
+}

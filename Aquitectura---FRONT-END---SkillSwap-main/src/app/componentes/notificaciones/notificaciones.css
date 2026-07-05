@@ -1,0 +1,103 @@
+.notif-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.notif-titulo {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ss-text);
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.notif-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.notif-empty-icon { font-size: 40px; margin: 0; }
+.notif-empty-txt  { font-size: 16px; font-weight: 600; color: var(--ss-text); margin: 0; }
+.notif-empty-sub  { font-size: 14px; color: #6c757d; margin: 0; }
+
+.notif-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notif-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.notif-card:hover {
+  transform: translateX(3px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.notif-card--nueva {
+  border-left: 4px solid var(--ss-primary);
+  background-color: rgba(0, 90, 156, 0.04);
+}
+
+.notif-card-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1;
+}
+
+.notif-icono {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.notif-tipo {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ss-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 4px;
+}
+
+.notif-contenido {
+  font-size: 14px;
+  color: var(--ss-text);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.notif-card-right {
+  flex-shrink: 0;
+}
+
+.notif-badge-nueva {
+  background-color: var(--ss-primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.notif-leida-icon {
+  color: var(--ss-success);
+  font-size: 18px;
+  font-weight: 700;
+}

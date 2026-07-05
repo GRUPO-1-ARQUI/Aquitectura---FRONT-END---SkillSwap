@@ -1,0 +1,141 @@
+.gf-page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.gf-page-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.gf-titulo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ss-text);
+  margin: 0;
+}
+
+.gf-contador {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.gf-state {
+  text-align: center;
+  color: #6c757d;
+  padding: 40px;
+}
+
+.gf-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.gf-empty-icon { font-size: 40px; margin: 0; }
+.gf-empty-txt  { font-size: 16px; font-weight: 600; color: var(--ss-text); margin: 0; }
+.gf-empty-sub  { font-size: 14px; color: #6c757d; margin: 0; }
+
+.gf-resumen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.gf-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 12px;
+  text-align: center;
+}
+
+.gf-stat-valor {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ss-primary);
+}
+
+.gf-stat-label {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.gf-graficos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.gf-grafico-card {
+  padding: 24px;
+}
+
+.gf-grafico-titulo {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ss-text);
+  margin: 0 0 20px;
+}
+
+.gf-donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.gf-donut {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 26px), #000 calc(100% - 26px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 26px), #000 calc(100% - 26px));
+}
+
+.gf-leyenda {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 160px;
+}
+
+.gf-leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ss-text);
+}
+
+.gf-leyenda-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.gf-leyenda-txt {
+  flex: 1;
+}
+
+.gf-leyenda-valor {
+  font-weight: 600;
+  color: #6c757d;
+}
+
+@media (max-width: 640px) {
+  .gf-resumen {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,0 +1,13 @@
+<app-top-nav [links]="links"></app-top-nav>
+
+@if (esEstudiante) {
+  <app-aviso-verificacion></app-aviso-verificacion>
+}
+
+@if (esTutor) {
+  <app-tour-tutor></app-tour-tutor>
+}
+
+<main class="layout-content">
+  <router-outlet></router-outlet>
+</main>

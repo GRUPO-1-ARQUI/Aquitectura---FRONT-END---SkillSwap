@@ -1,0 +1,52 @@
+<div class="tc-wrap">
+  <button
+    class="tc-icon-btn"
+    (click)="toggle()"
+    aria-label="Configurar tema de color"
+    title="Configurar tema de color"
+  >
+    @if (tema.esOscuro()) {
+      <span>🌙</span>
+    } @else {
+      <span>🎨</span>
+    }
+  </button>
+
+  @if (abierto()) {
+    <div class="tc-panel" (click)="$event.stopPropagation()">
+      <p class="tc-panel-titulo">Tema de color</p>
+
+      <div class="tc-modo-row">
+        <button
+          class="tc-modo-btn"
+          [class.tc-modo-btn--activo]="!tema.esOscuro()"
+          (click)="seleccionarModo('claro')"
+        >
+          ☀️ Claro
+        </button>
+        <button
+          class="tc-modo-btn"
+          [class.tc-modo-btn--activo]="tema.esOscuro()"
+          (click)="seleccionarModo('oscuro')"
+        >
+          🌙 Oscuro
+        </button>
+      </div>
+
+      <p class="tc-panel-subtitulo">Color de acento</p>
+
+      <div class="tc-colores-row">
+        @for (opcion of tema.coloresDisponibles; track opcion.valor) {
+          <button
+            class="tc-color-swatch"
+            [class.tc-color-swatch--activo]="tema.color() === opcion.valor"
+            [style.background-color]="opcion.muestra"
+            [attr.aria-label]="opcion.nombre"
+            [title]="opcion.nombre"
+            (click)="seleccionarColor(opcion.valor)"
+          ></button>
+        }
+      </div>
+    </div>
+  }
+</div>

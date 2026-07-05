@@ -1,0 +1,258 @@
+/* =========================================
+   DISEÑO RESPONSIVE: SOBRE NOSOTROS
+   Archivo: assets/styles/responsive-nosotros.css
+   ========================================= */
+
+/* Tablets y Móviles (Pantallas menores a 768px) */
+@media (max-width: 768px) {
+  .dropdown-content {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 8px;
+    padding: 10px 0;
+    min-width: 180px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 2000;
+  }
+  .dropdown-content a {
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    color: black;
+    white-space: nowrap; /* evita que el texto se parta */
+  }
+
+
+  .dropdown-content.activo {
+    display: block !important;
+  }
+
+  .menu-horizontal-opciones
+  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 0;
+    background-color: #ffffff;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: auto;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+  }
+
+  .llamado-accion-texto {
+    font-size: 28px;
+  }
+
+  .division-nosotros-ima img {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .seccion-nosotros {
+    margin: 20px;
+  }
+
+  .elementos-nosotros-txt
+  {
+    width: 90%;
+  }
+
+  .llamado-accion-boton,
+  .llamado-accion-boton2 {
+    width: 80%;
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+
+  /* mostrar hamburguesa */
+  .menu-hamburguesa {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    padding: 10px;
+    z-index: 1100;
+  }
+
+  .menu-hamburguesa span {
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+    transition: 0.3s;
+  }
+
+  /* Ocultar menú horizontal */
+  .menu-horizontal {
+    display: none;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #ccc;
+    z-index: 999;
+  }
+
+  /* Mostrar menú cuando esté abierto */
+  .menu-horizontal.activo {
+    display: block;
+  }
+
+  /* UL se hace vertical */
+  /*.menu-horizontal-opciones {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+  }*/
+
+  /* Botones más grandes */
+  .btn-iniciarsesion,
+  .btn-registrase {
+    width: 100%;
+    text-align: center;
+  }
+  .menu-horizontal.activo .menu-horizontal-opciones {
+    left: 0;
+  }
+
+  /* 1. Ajuste del Contenedor Principal */
+  /* Reducimos el padding para ganar espacio en pantallas pequeñas */
+  .seccion-sobre-nosotros-principal {
+    padding: 20px;
+    width: 100%;
+  }
+
+  /* 2. Bloque de Texto (Introducción) */
+  .sobre-nosotros-texto-bloque {
+    padding: 20px; /* Menos relleno interno */
+  }
+
+  .sobre-nosotros-texto-bloque h2 {
+    font-size: 24px; /* Fuente un poco más pequeña */
+    text-align: center;
+  }
+
+  .sobre-nosotros-texto-bloque p {
+    text-align: justify; /* Justificar texto para mejor lectura en móvil */
+    font-size: 15px;
+  }
+
+  /* 3. Grid Visión y Misión */
+  /* Pasamos de 2 columnas a 1 sola columna */
+  .vision-mision-grid {
+    grid-template-columns: 1fr; /* Una sola columna que ocupa todo el ancho */
+
+    gap: 30px; /* Reducimos el espacio entre tarjetas */
+  }
+
+  .tarjeta-info-vm {
+    padding: 20px;
+  }
+
+  /* 4. El Equipo */
+  .equipo-contenedor h2 {
+    text-align: center;
+    font-size: 24px;
+  }
+
+  /* Ajustamos el grid del equipo para móviles */
+  .equipo-grid {
+    /* Usamos repeat con auto-fit, pero ajustamos el minmax
+       para asegurar que en móviles muy pequeños se vean bien.
+       Esto intentará poner 2 por fila si caben, o 1 si es muy estrecho.
+    */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px;
+  }
+
+  /* Hacemos las tarjetas del equipo un poco más compactas */
+  .equipo-miembro {
+    padding: 15px;
+  }
+
+  .equipo-imagen-wrapper {
+    width: 100px; /* Imagen un poco más pequeña */
+    height: 100px;
+  }
+}
+
+/* Móviles Pequeños (Pantallas menores a 480px) */
+@media (max-width: 480px) {
+
+  /* Ajuste temporal de la Barra de Navegación
+     (Como NO usaremos hamburguesa aun, apilamos los links para que no se rompa el diseño) */
+  .barra-navegacion {
+    height: auto; /* Altura automática para que crezca */
+    padding: 10px;
+    position: relative; /* Quitamos fixed temporalmente para evitar problemas de scroll */
+  }
+
+  body {
+    margin-top: 0; /* Quitamos el margen superior porque el nav ya no es fixed */
+  }
+
+  .menu-horizontal-opciones {
+    flex-direction: column; /* Links en columna */
+    gap: 10px;
+    padding-top: 15px;
+  }
+
+  .menu-horizontal-opciones li a {
+    padding: 5px; /* Menos espacio entre links */
+    font-size: 14px;
+  }
+
+  /* Ajuste extra para el equipo en pantallas muy angostas */
+  .equipo-grid {
+    grid-template-columns: 1fr; /* Forzamos 2 columnas para que no se vea una lista eterna */
+  }
+}
+
+
+.video-att-contenedor {
+  display: flex;
+  flex-direction: column; /* Apila el título y video verticalmente */
+  align-items: center;    /* Centra los elementos horizontalmente */
+  justify-content: center;
+  margin: 40px auto;      /* Espacio arriba/abajo y centrado en la página */
+  padding: 20px;
+  max-width: 900px;       /* Ancho máximo para que no se estire demasiado */
+  width: 90%;             /* Ocupa el 90% en pantallas pequeñas */
+}
+
+.video-att-contenedor h2 {
+  font-family: sans-serif; /* O la fuente que uses en tu sitio (ej: 'Roboto') */
+  font-size: 1.8rem;
+  color: #333;            /* Gris oscuro */
+  margin-bottom: 20px;    /* Espacio entre título y video */
+  text-align: center;
+  font-weight: 700;
+}
+
+.video-att-contenedor iframe {
+  width: 100%;            /* Se adapta al ancho del contenedor */
+  max-width: 800px;       /* Límite de ancho para PC */
+  height: auto;           /* La altura se calcula automática */
+  aspect-ratio: 16 / 9;   /* Mantiene la proporción de YouTube (importante) */
+
+  /* Estética: Bordes y Sombras */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+  border: none;           /* Quita bordes predeterminados */
+  transition: transform 0.3s ease; /* Efecto suave al pasar el mouse (opcional) */
+}
+
+.video-att-contenedor iframe:hover {
+  transform: scale(1.02); /* Crece un poquito */
+}

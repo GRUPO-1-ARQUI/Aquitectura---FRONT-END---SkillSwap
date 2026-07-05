@@ -1,0 +1,75 @@
+<div class="gf-page">
+  <div class="gf-page-header">
+    <h1 class="gf-titulo">Gráficos y estadísticas</h1>
+    @if (!cargando()) {
+      <span class="gf-contador">{{ totalUsuarios() }} usuario{{ totalUsuarios() !== 1 ? 's' : '' }} registrados</span>
+    }
+  </div>
+
+  @if (cargando()) {
+    <div class="gf-state">Cargando estadísticas...</div>
+
+  } @else if (totalUsuarios() === 0) {
+    <div class="gf-empty ss-card">
+      <p class="gf-empty-icon">📊</p>
+      <p class="gf-empty-txt">Todavía no hay datos suficientes.</p>
+      <p class="gf-empty-sub">Los gráficos aparecerán aquí en cuanto haya usuarios registrados.</p>
+    </div>
+
+  } @else {
+    <!-- Tarjetas resumen -->
+    <div class="gf-resumen">
+      <div class="ss-card gf-stat">
+        <span class="gf-stat-valor">{{ totalUsuarios() }}</span>
+        <span class="gf-stat-label">Usuarios totales</span>
+      </div>
+      <div class="ss-card gf-stat">
+        <span class="gf-stat-valor">{{ verificados() }}</span>
+        <span class="gf-stat-label">Verificados</span>
+      </div>
+      <div class="ss-card gf-stat">
+        <span class="gf-stat-valor">{{ noVerificados() }}</span>
+        <span class="gf-stat-label">No verificados</span>
+      </div>
+      <div class="ss-card gf-stat">
+        <span class="gf-stat-valor">{{ verificacionesPendientes() }}</span>
+        <span class="gf-stat-label">Verificaciones pendientes</span>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="gf-graficos">
+      <div class="ss-card gf-grafico-card">
+        <h2 class="gf-grafico-titulo">Usuarios por rol</h2>
+        <div class="gf-donut-wrap">
+          <div class="gf-donut" [style.background]="conicGradientRol()"></div>
+          <div class="gf-leyenda">
+            @for (seg of segmentosRol(); track seg.etiqueta) {
+              <div class="gf-leyenda-item">
+                <span class="gf-leyenda-dot" [style.background-color]="seg.color"></span>
+                <span class="gf-leyenda-txt">{{ seg.etiqueta }}</span>
+                <span class="gf-leyenda-valor">{{ seg.valor }} ({{ seg.pct | number:'1.0-0' }}%)</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="ss-card gf-grafico-card">
+        <h2 class="gf-grafico-titulo">Usuarios por estado</h2>
+        <div class="gf-donut-wrap">
+          <div class="gf-donut" [style.background]="conicGradientEstado()"></div>
+          <div class="gf-leyenda">
+            @for (seg of segmentosEstado(); track seg.etiqueta) {
+              <div class="gf-leyenda-item">
+                <span class="gf-leyenda-dot" [style.background-color]="seg.color"></span>
+                <span class="gf-leyenda-txt">{{ seg.etiqueta }}</span>
+                <span class="gf-leyenda-valor">{{ seg.valor }} ({{ seg.pct | number:'1.0-0' }}%)</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
