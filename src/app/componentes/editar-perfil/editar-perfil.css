@@ -1,0 +1,123 @@
+.ep-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ep-titulo {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ss-text);
+  margin: 0;
+}
+
+.ep-loading {
+  text-align: center;
+  color: #6c757d;
+  padding: 60px;
+}
+
+.ep-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ep-card--muted {
+  opacity: 0.75;
+}
+
+.ep-card-creditos {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+}
+
+.ep-creditos-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+.ep-creditos-valor {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ss-primary);
+}
+
+.ep-card-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ss-text);
+  margin: 0;
+}
+
+.ep-card-desc {
+  font-size: 13.5px;
+  color: #666;
+  margin: 0;
+}
+
+.ep-vacio {
+  font-size: 14px;
+  color: #888;
+  font-style: italic;
+  margin: 0;
+}
+
+.ep-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ep-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ep-chip-quitar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 11px;
+  line-height: 1;
+  padding: 0;
+}
+
+.ep-chip-quitar:hover {
+  opacity: 1;
+  color: var(--ss-danger);
+}
+
+.ep-agregar-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.ep-select {
+  flex: 1;
+}
+
+.ep-agregar-btn {
+  flex-shrink: 0;
+}
+
+.ep-error {
+  color: var(--ss-danger);
+  font-size: 13px;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .ep-agregar-row { flex-direction: column; }
+}

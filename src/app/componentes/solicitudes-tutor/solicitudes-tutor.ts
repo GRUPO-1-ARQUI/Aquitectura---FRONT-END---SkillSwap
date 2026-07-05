@@ -4,10 +4,12 @@ import { catchError } from 'rxjs/operators';
 import { SolicitudService } from '../../services/solicitud.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { HabilidadService } from '../../services/habilidad.service';
+import { ResenaService } from '../../services/resena.service';
 import { SesionService } from '../../services/sesion.service';
 import { Solicitud } from '../../models/solicitud.model';
 import { Habilidad } from '../../models/habilidad.model';
 import { Usuario } from '../../models/usuario.model';
+import { Resena } from '../../models/resena.model';
 
 interface SolicitudVista {
   solicitud: Solicitud;
@@ -16,6 +18,7 @@ interface SolicitudVista {
   aprendizReputacion?: number;
   habilidadNombre: string;
   procesando: boolean;
+  yaCalificado: boolean;
 }
 
 @Component({
@@ -29,6 +32,7 @@ export class SolicitudesTutorComponent implements OnInit {
   private readonly solicitudSvc = inject(SolicitudService);
   private readonly usuarioSvc = inject(UsuarioService);
   private readonly habilidadSvc = inject(HabilidadService);
+  private readonly resenaSvc = inject(ResenaService);
   private readonly sesion = inject(SesionService);
 
   readonly solicitudes = signal<SolicitudVista[]>([]);
@@ -46,9 +50,13 @@ export class SolicitudesTutorComponent implements OnInit {
     forkJoin({
       solicitudes: this.solicitudSvc.getByTutor(uid).pipe(catchError(() => of([] as Solicitud[]))),
       habilidades: this.habilidadSvc.getAll().pipe(catchError(() => of([] as Habilidad[]))),
-    }).subscribe(({ solicitudes, habilidades }) => {
+      // El backend aún no tiene una entidad "Sesion" conectada: por ahora una reseña
+      // se identifica con idSesion === idSolicitud (misma convención que mis-solicitudes.ts).
+      resenas: this.resenaSvc.getByEvaluado(uid).pipe(catchError(() => of([] as Resena[]))),
+    }).subscribe(({ solicitudes, habilidades, resenas }) => {
       const habMap = new Map((habilidades as Habilidad[]).map(h => [h.idHabilidad, h.nombre]));
       const sols = solicitudes as Solicitud[];
+      const idsCalificados = new Set((resenas as Resena[]).map(r => r.idSesion));
 
       if (sols.length === 0) {
         this.solicitudes.set([]);
@@ -72,6 +80,7 @@ export class SolicitudesTutorComponent implements OnInit {
             aprendizReputacion: a?.reputacionPromedio,
             habilidadNombre: habMap.get(s.idHabilidad) ?? `Habilidad #${s.idHabilidad}`,
             procesando: false,
+            yaCalificado: idsCalificados.has(s.idSolicitud ?? -1),
           };
         }));
         this.cargando.set(false);
@@ -103,6 +112,11 @@ export class SolicitudesTutorComponent implements OnInit {
 
   esPendiente(estado?: string): boolean {
     return (estado?.toLowerCase() ?? '') === 'pendiente';
+  }
+
+  esCompletada(estado?: string): boolean {
+    const e = estado?.toLowerCase() ?? '';
+    return e === 'aceptado' || e === 'finalizado' || e === 'completado';
   }
 
   pillClass(estado?: string): string {

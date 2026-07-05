@@ -1,0 +1,101 @@
+<div class="ep-page">
+  <h1 class="ep-titulo">Editar Perfil</h1>
+
+  @if (cargando()) {
+    <div class="ep-loading">Cargando perfil...</div>
+  } @else if (!usuario()) {
+    <div class="ep-loading">No se pudo cargar tu perfil.</div>
+  } @else {
+
+    <!-- Créditos acumulados (US51) -->
+    <section class="ss-card ep-card ep-card-creditos">
+      <span class="ep-creditos-label">Créditos acumulados</span>
+      <span class="ep-creditos-valor">{{ usuario()!.creditos ?? 0 }}</span>
+    </section>
+
+    <!-- Temas de dominio (habilidades para aprender) -->
+    <section class="ss-card ep-card">
+      <h2 class="ep-card-titulo">Temas de dominio</h2>
+      <p class="ep-card-desc">Las materias en las que necesitas ayuda. Los tutores te encontrarán a partir de estos temas.</p>
+
+      @if (misAprender().length > 0) {
+        <div class="ep-chips-row">
+          @for (chip of misAprender(); track chip.idHabilidad) {
+            <span class="ss-chip ep-chip">
+              {{ chip.nombre }}
+              <button type="button" class="ep-chip-quitar" (click)="eliminarAprender(chip)" aria-label="Eliminar {{ chip.nombre }}">✕</button>
+            </span>
+          }
+        </div>
+      } @else {
+        <p class="ep-vacio">Aún no agregaste ningún tema. Agrega al menos uno para que los tutores puedan verte.</p>
+      }
+
+      <div class="ep-agregar-row">
+        <select class="ss-input ep-select"
+                [ngModel]="seleccionAprender()"
+                (ngModelChange)="seleccionAprender.set($event)"
+                name="selAprender">
+          <option [ngValue]="null">— Selecciona un curso —</option>
+          @for (h of todasHabilidades(); track h.idHabilidad) {
+            <option [ngValue]="h.idHabilidad">{{ h.nombre }}</option>
+          }
+        </select>
+        <button type="button" class="ss-btn-primary ep-agregar-btn"
+                [disabled]="guardandoAprender()"
+                (click)="agregarAprender()">
+          {{ guardandoAprender() ? 'Agregando...' : 'Agregar' }}
+        </button>
+      </div>
+      @if (errorAprender()) {
+        <p class="ep-error">{{ errorAprender() }}</p>
+      }
+    </section>
+
+    <!-- Habilidades para enseñar (solo usuarios verificados) -->
+    @if (usuario()!.verificado) {
+      <section class="ss-card ep-card">
+        <h2 class="ep-card-titulo">Habilidades para Enseñar</h2>
+        <p class="ep-card-desc">Las materias que dominas. Solo apareces en resultados de búsqueda de los temas que agregues aquí.</p>
+
+        @if (misEnsenar().length > 0) {
+          <div class="ep-chips-row">
+            @for (chip of misEnsenar(); track chip.idHabilidad) {
+              <span class="ss-chip ep-chip">
+                {{ chip.nombre }}
+                <button type="button" class="ep-chip-quitar" (click)="eliminarEnsenar(chip)" aria-label="Eliminar {{ chip.nombre }}">✕</button>
+              </span>
+            }
+          </div>
+        } @else {
+          <p class="ep-vacio">Aún no agregaste ninguna habilidad. Sin al menos una, no aparecerás en ninguna búsqueda.</p>
+        }
+
+        <div class="ep-agregar-row">
+          <select class="ss-input ep-select"
+                  [ngModel]="seleccionEnsenar()"
+                  (ngModelChange)="seleccionEnsenar.set($event)"
+                  name="selEnsenar">
+            <option [ngValue]="null">— Selecciona una habilidad —</option>
+            @for (h of todasHabilidades(); track h.idHabilidad) {
+              <option [ngValue]="h.idHabilidad">{{ h.nombre }}</option>
+            }
+          </select>
+          <button type="button" class="ss-btn-primary ep-agregar-btn"
+                  [disabled]="guardandoEnsenar()"
+                  (click)="agregarEnsenar()">
+            {{ guardandoEnsenar() ? 'Agregando...' : 'Agregar' }}
+          </button>
+        </div>
+        @if (errorEnsenar()) {
+          <p class="ep-error">{{ errorEnsenar() }}</p>
+        }
+      </section>
+    } @else {
+      <section class="ss-card ep-card ep-card--muted">
+        <h2 class="ep-card-titulo">Habilidades para Enseñar</h2>
+        <p class="ep-vacio">Esta sección se habilita cuando un coordinador verifique tu cuenta.</p>
+      </section>
+    }
+  }
+</div>

@@ -5,3 +5,6 @@ export interface UsuarioHabilidad {
   tipo: string;
   nivel: string;
 }
+
+export const TIPO_HABILIDAD_APRENDER = 'aprender';
+export const TIPO_HABILIDAD_ENSENAR = 'enseñar';

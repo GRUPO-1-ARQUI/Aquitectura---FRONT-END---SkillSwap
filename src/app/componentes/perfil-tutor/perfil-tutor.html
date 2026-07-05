@@ -15,7 +15,7 @@
       <div class="pt-top-actions">
         <button class="pt-icon-btn" title="Modo oscuro (decorativo)">🌙</button>
         <button class="pt-icon-btn pt-heart" [class.pt-heart--on]="esFavorito()"
-                (click)="esFavorito.update(v => !v)">
+                (click)="toggleFavorito()">
           {{ esFavorito() ? '♥' : '♡' }}
         </button>
       </div>
@@ -24,7 +24,11 @@
         <!-- Columna izquierda -->
         <div class="pt-col-left">
           <div class="pt-avatar-grande">{{ inicial() }}</div>
-          <span class="ss-verified">Tutor Verificado</span>
+          @if (tutor()!.verificado) {
+            <span class="ss-verified">Tutor Verificado</span>
+          } @else {
+            <span class="ss-pending">Verificación pendiente</span>
+          }
 
           @if (promedioStr()) {
             <span class="ss-star pt-star">{{ promedioStr() }} estrellas</span>

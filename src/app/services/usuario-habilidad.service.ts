@@ -13,4 +13,12 @@ export class UsuarioHabilidadService {
   getByUsuario(id: number): Observable<UsuarioHabilidad[]> {
     return this.http.get<UsuarioHabilidad[]>(`${this.base}/usuario/${id}`);
   }
+
+  create(uh: UsuarioHabilidad): Observable<UsuarioHabilidad> {
+    return this.http.post<UsuarioHabilidad>(this.base, uh);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/${id}`);
+  }
 }

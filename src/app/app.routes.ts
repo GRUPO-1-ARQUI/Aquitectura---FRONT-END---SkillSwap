@@ -15,6 +15,8 @@ import { NotificacionesComponent } from './componentes/notificaciones/notificaci
 import { MisSolicitudesComponent } from './componentes/mis-solicitudes/mis-solicitudes';
 import { SolicitudesTutorComponent } from './componentes/solicitudes-tutor/solicitudes-tutor';
 import { VerificacionesComponent } from './componentes/verificaciones/verificaciones';
+import { EditarPerfilComponent } from './componentes/editar-perfil/editar-perfil';
+import { MisFavoritosComponent } from './componentes/mis-favoritos/mis-favoritos';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -35,6 +37,8 @@ export const routes: Routes = [
     children: [
       { path: 'buscar',          component: BuscarTutoresComponent },
       { path: 'tutor/:id',       component: PerfilTutorComponent },
+      { path: 'perfil',          component: EditarPerfilComponent },
+      { path: 'favoritos',       component: MisFavoritosComponent },
       { path: 'mis-solicitudes', component: MisSolicitudesComponent },
       { path: 'notificaciones',  component: NotificacionesComponent },
       { path: 'solicitudes',     component: SolicitudesTutorComponent },

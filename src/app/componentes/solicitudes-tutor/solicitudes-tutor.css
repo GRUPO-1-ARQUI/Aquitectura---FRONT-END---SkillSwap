@@ -111,6 +111,10 @@
   align-self: flex-start;
 }
 
+.st-pill-creditos {
+  margin-top: 4px;
+}
+
 /* Habilidad row */
 .st-habilidad-row {
   display: flex;
