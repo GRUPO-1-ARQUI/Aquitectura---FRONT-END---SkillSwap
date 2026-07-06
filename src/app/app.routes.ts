@@ -18,6 +18,8 @@ import { VerificacionesComponent } from './componentes/verificaciones/verificaci
 import { EditarPerfilComponent } from './componentes/editar-perfil/editar-perfil';
 import { MisFavoritosComponent } from './componentes/mis-favoritos/mis-favoritos';
 import { authGuard } from './guards/auth.guard';
+import { MiPerfilComponent } from './componentes/mi-perfil/mi-perfil';
+import { GraficosComponent } from './componentes/graficos/graficos';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -43,6 +45,8 @@ export const routes: Routes = [
       { path: 'notificaciones',  component: NotificacionesComponent },
       { path: 'solicitudes',     component: SolicitudesTutorComponent },
       { path: 'verificaciones',  component: VerificacionesComponent },
+      { path: 'mi-perfil',       component: MiPerfilComponent },
+      { path: 'graficos',        component: GraficosComponent },
       { path: '',                redirectTo: 'buscar', pathMatch: 'full' },
     ],
   },

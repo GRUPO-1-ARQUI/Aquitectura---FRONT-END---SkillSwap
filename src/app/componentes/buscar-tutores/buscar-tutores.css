@@ -48,6 +48,12 @@
   gap: 6px;
   white-space: nowrap;
   border-radius: 999px;
+  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bt-filtros-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Chips row */
@@ -99,6 +105,12 @@
   gap: 8px;
   cursor: pointer;
   padding: 28px 20px 18px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bt-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* Heart */
@@ -113,11 +125,14 @@
   cursor: pointer;
   padding: 0;
   line-height: 1;
-  transition: color 0.15s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .bt-heart--on { color: var(--ss-danger); }
 .bt-heart:hover { color: var(--ss-danger); }
+.bt-heart:hover {
+  transform: scale(1.2);
+}
 
 /* Avatar */
 .bt-avatar {

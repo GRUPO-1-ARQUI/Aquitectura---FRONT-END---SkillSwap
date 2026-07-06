@@ -2,6 +2,7 @@ export interface Usuario {
   idUsuario: number;
   nombreCompleto: string;
   correoInstitucional: string;
+  codigoEstudiante?: string;
   password?: string;
   idInstitucion?: number;
   rol: string;

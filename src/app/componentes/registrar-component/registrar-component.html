@@ -1,86 +1,156 @@
 <section class="pantalla activa">
   <div class="seccion-registro-cuenta">
-    <h1>Registrarse</h1>
 
-    <form class="formulario-registro" (ngSubmit)="validarRegistro()" #registroForm="ngForm">
+    @if (!rolSeleccionado()) {
+      <!-- PASO 1: elegir rol -->
+      <h1>¿Cómo quieres registrarte?</h1>
 
-      <div class="formulario-registro-elemento">
-        <label>Nombres*</label>
-        <input
-          type="text"
-          name="nombre"
-          class="ss-input"
-          [(ngModel)]="nombre"
-          placeholder="Ariana Marcela"
-          required
-        />
-      </div>
+      <div class="rc-rol-opciones">
+        <button
+          type="button"
+          class="rc-rol-card"
+          (click)="elegirRol('estudiante')"
+        >
+          <h3>Soy Estudiante</h3>
+          <p>Quiero buscar tutores que me ayuden con un curso.</p>
+        </button>
 
-      <div class="formulario-registro-elemento">
-        <label>Apellidos*</label>
-        <input
-          type="text"
-          name="apellidos"
-          class="ss-input"
-          [(ngModel)]="apellidos"
-          placeholder="Garcia Vasquez"
-          required
-        />
-      </div>
-
-      <div class="formulario-registro-elemento">
-        <label for="reg-email">Correo Institucional*</label>
-        <input
-          type="email"
-          id="reg-email"
-          name="correoInstitucional"
-          class="ss-input"
-          [(ngModel)]="correoInstitucional"
-          placeholder="u20201234@upc.edu.pe"
-          required
-        />
-      </div>
-
-      <div class="formulario-registro-elemento">
-        <label for="reg-password">Contraseña*</label>
-        <input
-          type="password"
-          id="reg-password"
-          name="password"
-          class="ss-input"
-          [(ngModel)]="password"
-          placeholder="Mínimo 8 caracteres"
-          required
-        />
-      </div>
-
-      <div class="formulario-registro-elemento">
-        <label for="reg-confirm">Confirmar Contraseña*</label>
-        <input
-          type="password"
-          id="reg-confirm"
-          name="confirmarPassword"
-          class="ss-input"
-          [(ngModel)]="confirmarPassword"
-          placeholder="Repite tu contraseña"
-          required
-        />
-      </div>
-
-      @if (error()) {
-        <p class="rc-msg rc-msg--err">{{ error() }}</p>
-      }
-
-      <div class="formulario-registro-elemento">
-        <button type="submit" class="ss-btn-primary" [disabled]="cargando()">
-          {{ cargando() ? 'Registrando...' : 'Registrarse' }}
+        <button
+          type="button"
+          class="rc-rol-card"
+          (click)="elegirRol('tutor')"
+        >
+          <h3>Soy Tutor</h3>
+          <p>Quiero enseñar y ayudar a otros estudiantes.</p>
         </button>
       </div>
 
       <div class="formulario-registro-elemento">
         <label>¿Ya tienes cuenta? <a routerLink="/login">Entra Aquí</a></label>
       </div>
-    </form>
+    } @else {
+      <!-- PASO 2: formulario según el rol elegido -->
+      <h1>{{ rolSeleccionado() === 'tutor' ? 'Registro de Tutor' : 'Registro de Estudiante' }}</h1>
+
+      <form class="formulario-registro" (ngSubmit)="validarRegistro()" #registroForm="ngForm">
+
+        <div class="formulario-registro-elemento">
+          <label>Nombres*</label>
+          <input
+            type="text"
+            name="nombre"
+            class="ss-input"
+            [(ngModel)]="nombre"
+            placeholder="Ariana Marcela"
+            required
+          />
+        </div>
+
+        <div class="formulario-registro-elemento">
+          <label>Apellidos*</label>
+          <input
+            type="text"
+            name="apellidos"
+            class="ss-input"
+            [(ngModel)]="apellidos"
+            placeholder="Garcia Vasquez"
+            required
+          />
+        </div>
+
+        <div class="formulario-registro-elemento">
+          <label for="reg-email">Correo Institucional*</label>
+          <input
+            type="email"
+            id="reg-email"
+            name="correoInstitucional"
+            class="ss-input"
+            [(ngModel)]="correoInstitucional"
+            [placeholder]="rolSeleccionado() === 'tutor' ? 'tutor@universidad.edu.pe' : 'u20201234@upc.edu.pe'"
+            required
+          />
+        </div>
+
+        @if (rolSeleccionado() === 'estudiante') {
+          <div class="formulario-registro-elemento">
+            <label for="reg-codigo">Código de Estudiante*</label>
+            <input
+              type="text"
+              id="reg-codigo"
+              name="codigoEstudiante"
+              class="ss-input"
+              [(ngModel)]="codigoEstudiante"
+              placeholder="U20201234"
+              required
+            />
+          </div>
+        }
+
+        <div class="formulario-registro-elemento">
+          <label for="reg-institucion">Universidad*</label>
+          <select
+            id="reg-institucion"
+            name="idInstitucion"
+            class="ss-input"
+            [(ngModel)]="idInstitucion"
+            required
+          >
+            <option [ngValue]="null" disabled selected>Selecciona tu universidad</option>
+            @for (inst of instituciones(); track inst.idInstitucion) {
+              <option [ngValue]="inst.idInstitucion">
+                {{ inst.nombre }} ({{ inst.siglas }})
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="formulario-registro-elemento">
+          <label for="reg-password">Contraseña*</label>
+          <input
+            type="password"
+            id="reg-password"
+            name="password"
+            class="ss-input"
+            [(ngModel)]="password"
+            placeholder="Mínimo 8 caracteres"
+            required
+          />
+        </div>
+
+        <div class="formulario-registro-elemento">
+          <label for="reg-confirm">Confirmar Contraseña*</label>
+          <input
+            type="password"
+            id="reg-confirm"
+            name="confirmarPassword"
+            class="ss-input"
+            [(ngModel)]="confirmarPassword"
+            placeholder="Repite tu contraseña"
+            required
+          />
+        </div>
+
+        @if (error()) {
+          <p class="rc-msg rc-msg--err">{{ error() }}</p>
+        }
+
+        <div class="formulario-registro-elemento">
+          <button type="submit" class="ss-btn-primary" [disabled]="cargando()">
+            {{ cargando() ? 'Registrando...' : 'Registrarse' }}
+          </button>
+        </div>
+
+        <div class="formulario-registro-elemento">
+          <label>
+            <a (click)="volverAElegirRol()" style="cursor:pointer;">&larr; Cambiar tipo de cuenta</a>
+          </label>
+        </div>
+
+        <div class="formulario-registro-elemento">
+          <label>¿Ya tienes cuenta? <a routerLink="/login">Entra Aquí</a></label>
+        </div>
+      </form>
+    }
   </div>
 </section>
 

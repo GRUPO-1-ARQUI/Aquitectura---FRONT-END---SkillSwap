@@ -1,5 +1,13 @@
 <app-top-nav [links]="links" />
 
+@if (esEstudiante) {
+  <app-aviso-verificacion />
+}
+
+@if (esTutor) {
+  <app-tour-tutor />
+}
+
 <main class="lp-main">
   <router-outlet />
 </main>

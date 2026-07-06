@@ -13,7 +13,9 @@
 
       <!-- Acciones arriba derecha -->
       <div class="pt-top-actions">
-        <button class="pt-icon-btn" title="Modo oscuro (decorativo)">🌙</button>
+        <button class="pt-icon-btn" (click)="tema.alternarModo()" [attr.aria-label]="tema.esOscuro() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'" title="Cambiar tema">
+          {{ tema.esOscuro() ? '☀️' : '🌙' }}
+        </button>
         <button class="pt-icon-btn pt-heart" [class.pt-heart--on]="esFavorito()"
                 (click)="toggleFavorito()">
           {{ esFavorito() ? '♥' : '♡' }}

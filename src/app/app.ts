@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
   private readonly router = inject(Router);
+  private readonly tema = inject(ThemeService);
   readonly isPrivateZone = signal(false);
 
   constructor() {

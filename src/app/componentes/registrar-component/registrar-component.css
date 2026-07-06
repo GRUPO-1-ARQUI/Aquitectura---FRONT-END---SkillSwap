@@ -428,3 +428,71 @@ body
   color: var(--ss-danger);
   background: rgba(220, 53, 69, 0.08);
 }
+
+.rc-rol-opciones {
+  display: flex;
+  gap: 24px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.rc-rol-card {
+  background: var(--white-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 16px;
+  padding: 30px 24px;
+  width: 260px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  font-family: inherit;
+}
+
+.rc-rol-card h3 {
+  color: var(--primary-color);
+  font-size: var(--h3-font-size);
+  margin-bottom: 10px;
+}
+
+.rc-rol-card p {
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: var(--line-height);
+}
+
+.rc-rol-card:hover {
+  transform: scale(1.03);
+  border-color: var(--secondary-color);
+  box-shadow: 0 4px 12px rgba(25, 59, 105, 0.2);
+}
+
+@media screen and (max-width: 768px) {
+  .rc-rol-opciones {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.formulario-registro-elemento .ss-btn-primary {
+  width: 100%;
+  max-width: 400px;
+  justify-content: center;
+  padding: 14px 24px;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, var(--primary-color), #0d2647);
+  box-shadow: 0 4px 14px rgba(25, 59, 105, 0.35);
+}
+
+.formulario-registro-elemento .ss-btn-primary:hover {
+  background: linear-gradient(135deg, #0d2647, var(--primary-color));
+  box-shadow: 0 6px 18px rgba(25, 59, 105, 0.45);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.formulario-registro-elemento .ss-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}

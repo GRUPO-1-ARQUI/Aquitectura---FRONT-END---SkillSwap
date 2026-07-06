@@ -16,6 +16,7 @@ import { Habilidad } from '../../models/habilidad.model';
 import { Institucion } from '../../models/institucion.model';
 import { UsuarioHabilidad, TIPO_HABILIDAD_ENSENAR } from '../../models/usuario-habilidad.model';
 import { Resena } from '../../models/resena.model';
+import { ThemeService } from '../../services/theme.service';
 
 interface HabilidadOpcion { id: number; nombre: string; }
 interface ResenaVista { resena: Resena; evaluadorNombre: string; }
@@ -37,6 +38,7 @@ export class PerfilTutorComponent implements OnInit {
   private readonly institucionSvc = inject(InstitucionService);
   private readonly sesion = inject(SesionService);
   private readonly favoritoSvc = inject(FavoritoService);
+  readonly tema = inject(ThemeService);
 
   readonly tutor = signal<Usuario | null>(null);
   readonly promedio = signal<number | null>(null);

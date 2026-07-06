@@ -64,6 +64,60 @@ body {
   color: var(--ss-text);
   font-family: var(--ss-font);
   margin-top: 75px; /* Espacio para la barra de navegación fija */
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+/* --- Colores de acento --- */
+html[data-color="azul"] {
+  --ss-primary: #005A9C;
+  --primary-color: #193b69;
+}
+
+html[data-color="rojo"] {
+  --ss-primary: #DC3545;
+  --primary-color: #DC3545;
+}
+
+html[data-color="amarillo"] {
+  --ss-primary: #D97706;
+  --primary-color: #D97706;
+}
+
+html[data-color="celeste"] {
+  --ss-primary: #0EA5E9;
+  --primary-color: #0EA5E9;
+}
+
+html[data-theme="oscuro"] {
+  --ss-bg: #0F172A;
+  --ss-surface: #1E293B;
+  --ss-text: #E2E8F0;
+  --background-color: #0F172A;
+  --white-color: #1E293B;
+  --text-color: #E2E8F0;
+  --border-color: #334155;
+  --placeholder-text-color: #64748B;
+}
+
+html[data-theme="oscuro"] .ss-card {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="oscuro"] .ss-input {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+html[data-theme="oscuro"] .ss-btn-outline {
+  color: var(--ss-primary);
+}
+
+html[data-theme="oscuro"] .ss-chip {
+  color: #fde68a;
+}
+
+html[data-theme="oscuro"] .ss-nav {
+  background-color: rgba(15, 23, 42, 0.92);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06), 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 .dropdown-content {
@@ -7115,6 +7169,35 @@ body.dark-mode .creditos-container {
   background-color: var(--ss-primary);
   color: #ffffff;
   transform: translateY(-1px);
+}
+
+.ss-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--ss-danger);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 24px;
+  font-family: var(--ss-font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.28);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+.ss-btn-danger:hover {
+  background-color: #bb2d3b;
+  box-shadow: 0 4px 14px rgba(220, 53, 69, 0.38);
+  transform: translateY(-1px);
+}
+.ss-btn-danger:active { transform: translateY(0); }
+.ss-btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Chip (habilidades / temas) */
