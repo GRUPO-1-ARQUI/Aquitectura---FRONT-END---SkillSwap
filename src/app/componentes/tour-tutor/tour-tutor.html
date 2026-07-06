@@ -1,0 +1,52 @@
+@if (!tour.activo()) {
+  <button class="tt-ayuda" (click)="reiniciar()" aria-label="Ver tour de bienvenida" title="Ver tour de bienvenida">
+    ?
+  </button>
+}
+
+@if (tour.activo()) {
+  <div class="tt-overlay" (click)="cerrar()"></div>
+
+  @if (spotlight()) {
+    <div
+      class="tt-spotlight"
+      [style.top.px]="spotlight()!.top"
+      [style.left.px]="spotlight()!.left"
+      [style.width.px]="spotlight()!.width"
+      [style.height.px]="spotlight()!.height"
+    ></div>
+  }
+
+  <div
+    class="tt-tooltip tt-tooltip--{{ tooltipPlacement() }}"
+    [class.tt-tooltip--centrado]="!tooltipPos()"
+    [style.top.px]="tooltipPos()?.top"
+    [style.left.px]="tooltipPos()?.left"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="tt-tooltip-header">
+      <span class="tt-paso-contador">Paso {{ tour.pasoActual() + 1 }} de {{ pasos.length }}</span>
+      <button class="tt-cerrar" (click)="cerrar()" aria-label="Cerrar tour">✕</button>
+    </div>
+
+    <h3 class="tt-titulo">{{ pasoActual.titulo }}</h3>
+    <p class="tt-texto">{{ pasoActual.texto }}</p>
+
+    <div class="tt-progreso">
+      @for (p of pasos; track $index) {
+        <span class="tt-dot" [class.tt-dot--activo]="$index === tour.pasoActual()"></span>
+      }
+    </div>
+
+    <div class="tt-acciones">
+      @if (!esPrimero) {
+        <button class="ss-btn-outline tt-btn-sm" (click)="anterior()">Anterior</button>
+      } @else {
+        <button class="tt-saltar" (click)="cerrar()">Saltar tour</button>
+      }
+      <button class="ss-btn-primary tt-btn-sm" (click)="siguiente()">
+        {{ esUltimo ? 'Finalizar' : 'Siguiente' }}
+      </button>
+    </div>
+  </div>
+}

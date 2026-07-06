@@ -1,0 +1,108 @@
+@if (cargando()) {
+  <div class="mp-loading">Cargando tu perfil...</div>
+} @else if (!usuario()) {
+  <div class="mp-loading">No se pudo cargar tu perfil.</div>
+} @else {
+  <section class="seccion-perfil-habilidades">
+
+    <!-- Columna izquierda -->
+    <aside class="habilidades-perfil-sidebar">
+      <div class="habilidades-imagen-wrapper">
+        <div class="habilidades-imagen-perfil mp-avatar-inicial">{{ inicial }}</div>
+        @if (usuario()!.verificado) {
+          <span class="habilidades-verificado-badge" title="Cuenta verificada">✔</span>
+        }
+      </div>
+      <p class="habilidades-nombre-perfil">{{ usuario()!.nombreCompleto }}</p>
+      <p class="mp-rol-pill">{{ usuario()!.rol }}</p>
+    </aside>
+
+    <!-- Columna derecha -->
+    <div class="habilidades-contenido-principal">
+      <h1 class="habilidades-titulo-principal">Editar mi perfil</h1>
+
+      <!-- Datos personales -->
+      <div class="ss-card mp-form-card">
+        <h2>Datos personales</h2>
+
+        <label class="mp-label">Nombre completo</label>
+        <input class="ss-input" type="text" [(ngModel)]="nombreCompleto" name="nombreCompleto" />
+
+        <label class="mp-label">Correo institucional</label>
+        <input class="ss-input" type="email" [(ngModel)]="correoInstitucional" name="correoInstitucional" />
+
+        <label class="mp-label">Biografía</label>
+        <textarea class="ss-input mp-textarea" rows="3" maxlength="500"
+                  [(ngModel)]="biografia" name="biografia"
+                  placeholder="Cuéntale a otros sobre ti..."></textarea>
+
+        <label class="mp-label">Nueva contraseña (opcional)</label>
+        <input class="ss-input" type="password" [(ngModel)]="passwordNueva" name="passwordNueva"
+               placeholder="Déjalo vacío si no quieres cambiarla" />
+
+        @if (errorGuardar()) {
+          <p class="mp-error">{{ errorGuardar() }}</p>
+        }
+        @if (guardadoOk()) {
+          <p class="mp-ok">Perfil actualizado correctamente ✔</p>
+        }
+
+        <button class="ss-btn-primary mp-guardar-btn" [disabled]="guardando()" (click)="guardarPerfil()">
+          {{ guardando() ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+
+      <!-- Cursos / habilidades actuales -->
+      <div class="habilidades-actuales-contenedor">
+        <h2>Mis cursos y habilidades</h2>
+
+        @if (misHabilidades().length === 0) {
+          <p class="mp-vacio">Todavía no agregaste ningún curso.</p>
+        } @else {
+          <div class="tags-actuales-wrapper">
+            @for (h of misHabilidades(); track h.usuarioHabilidad.id) {
+              <span class="habilidad-tag">
+                {{ h.nombre }}
+                <span class="mp-tag-nivel">· {{ h.usuarioHabilidad.nivel }}</span>
+                <button class="mp-tag-quitar" title="Quitar" (click)="quitarHabilidad(h)">✕</button>
+              </span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Agregar nuevo curso -->
+      <div class="habilidades-agregar-contenedor">
+        <h2>Agregar curso o habilidad</h2>
+
+        <div class="mp-agregar-fila">
+          <select class="habilidades-select-box" [(ngModel)]="nuevaHabilidadId" name="nuevaHabilidadId">
+            <option [ngValue]="null" disabled>Selecciona un curso...</option>
+            @for (h of habilidadesDisponibles; track h.idHabilidad) {
+              <option [ngValue]="h.idHabilidad">{{ h.nombre }}</option>
+            }
+          </select>
+
+          <select class="habilidades-select-box mp-select-chico" [(ngModel)]="nuevoTipo" name="nuevoTipo">
+            <option [value]="TIPO_ENSENAR">Lo enseño</option>
+            <option [value]="TIPO_APRENDER">Lo quiero aprender</option>
+          </select>
+
+          <select class="habilidades-select-box mp-select-chico" [(ngModel)]="nuevoNivel" name="nuevoNivel">
+            <option value="basico">Básico</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+          </select>
+
+          <button class="ss-btn-outline" [disabled]="agregando()" (click)="agregarHabilidad()">
+            {{ agregando() ? 'Agregando...' : '+ Agregar' }}
+          </button>
+        </div>
+
+        @if (errorAgregar()) {
+          <p class="mp-error">{{ errorAgregar() }}</p>
+        }
+      </div>
+    </div>
+  </section>
+}

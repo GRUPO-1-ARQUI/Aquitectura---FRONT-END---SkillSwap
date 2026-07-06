@@ -2,14 +2,19 @@
   <!-- LEFT: brand -->
   <a routerLink="/home" class="ss-nav__brand">
     <img src="/images/SkillSwap_logo.png" alt="SkillSwap" class="ss-nav__logo" />
-    <span class="ss-nav__brand-name">SkillSwap</span>
   </a>
 
   <!-- RIGHT: links + actions -->
   <div class="ss-nav__right">
     @for (link of links; track link.path) {
-      <a [routerLink]="link.path" routerLinkActive="ss-nav__link--active" class="ss-nav__link">{{ link.label }}</a>
+      <a [routerLink]="link.path"
+         routerLinkActive="ss-nav__link--active"
+         class="ss-nav__link"
+         [attr.data-tour]="'nav-link-' + link.path">{{ link.label }}</a>
     }
+
+    <!-- Selector de tema de color -->
+    <app-selector-tema />
 
     <!-- Search icon -->
     <button class="ss-nav__icon-btn" aria-label="Buscar">

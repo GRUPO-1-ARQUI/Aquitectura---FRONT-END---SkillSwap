@@ -8,4 +8,6 @@
 
 .lp-main {
   padding: 24px;
+  max-width: 1400px;
+  margin: auto;
 }

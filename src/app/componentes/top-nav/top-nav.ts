@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SesionService } from '../../services/sesion.service';
 import { NotificacionService } from '../../services/notificacion.service';
+import { SelectorTemaComponent } from '../selector-tema/selector-tema';
 
 export interface NavLink {
   label: string;
@@ -15,7 +16,7 @@ export interface NavLink {
 @Component({
   selector: 'app-top-nav',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, SelectorTemaComponent],
   templateUrl: './top-nav.html',
   styleUrl: './top-nav.css',
 })

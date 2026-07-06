@@ -1,0 +1,123 @@
+.mp-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.mp-avatar-inicial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  background-color: #005a9c;
+}
+
+.mp-rol-pill {
+  text-transform: capitalize;
+  background-color: #e3f2fd;
+  color: #005a9c;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 4px 14px;
+  border-radius: 999px;
+}
+
+.mp-form-card {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mp-form-card h2 {
+  margin-bottom: 10px;
+}
+
+.mp-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  margin-top: 14px;
+  margin-bottom: 4px;
+}
+
+.mp-textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.mp-guardar-btn {
+  margin-top: 20px;
+  align-self: flex-start;
+}
+
+.mp-error {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.mp-ok {
+  color: #28a745;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.mp-vacio {
+  color: #777;
+  font-style: italic;
+}
+
+.mp-tag-nivel {
+  opacity: 0.85;
+  font-weight: 400;
+  text-transform: capitalize;
+  margin-left: 4px;
+}
+
+.mp-tag-quitar {
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.mp-tag-quitar:hover {
+  opacity: 1;
+}
+
+.mp-agregar-fila {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.mp-select-chico {
+  max-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .seccion-perfil-habilidades {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .mp-agregar-fila {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mp-agregar-fila .habilidades-select-box,
+  .mp-agregar-fila button {
+    max-width: 100%;
+    width: 100%;
+  }
+}

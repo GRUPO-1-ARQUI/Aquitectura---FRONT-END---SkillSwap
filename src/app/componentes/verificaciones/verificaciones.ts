@@ -1,8 +1,10 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { VerificacionService } from '../../services/verificacion.service';
+import { VerificacionService, ReporteVerificaciones } from '../../services/verificacion.service';
+import { UsuarioService } from '../../services/usuario.service';
+import { SesionService } from '../../services/sesion.service';
 import { Verificacion } from '../../models/verificacion.model';
 import { EstudianteVerificacion } from '../../models/estudiante-verificacion.model';
 
@@ -23,12 +25,69 @@ interface VerificacionVista {
 })
 export class VerificacionesComponent implements OnInit {
   private readonly verificacionSvc = inject(VerificacionService);
+  private readonly usuarioSvc = inject(UsuarioService);
+  readonly sesionSvc = inject(SesionService);
 
   readonly cargando = signal(true);
   readonly verificaciones = signal<VerificacionVista[]>([]);
 
+  readonly reporte = signal<ReporteVerificaciones | null>(null);
+  readonly cargandoReporte = signal(true);
+
+  readonly datosGrafico = computed(() => {
+    const r = this.reporte();
+    if (!r) return null;
+
+    const total = r.verificados + r.pendientes + r.rechazados;
+    const pct = (n: number) => (total > 0 ? Math.round((n / total) * 100) : 0);
+
+    return {
+      total,
+      verificados: r.verificados,
+      pendientes: r.pendientes,
+      rechazados: r.rechazados,
+      pctVerificados: pct(r.verificados),
+      pctPendientes: pct(r.pendientes),
+      pctRechazados: pct(r.rechazados),
+      totalEstudiantes: r.totalEstudiantes,
+    };
+  });
+
+  readonly itemARechazar = signal<VerificacionVista | null>(null);
+
   ngOnInit(): void {
     this.cargar();
+    this.cargarReporte();
+  }
+
+  cargarReporte(): void {
+    this.cargandoReporte.set(true);
+    const idUsuario = this.sesionSvc.getUserId();
+
+    if (!idUsuario) {
+      this.cargandoReporte.set(false);
+      return;
+    }
+
+    this.usuarioSvc
+      .getById(idUsuario)
+      .pipe(catchError(() => of(null)))
+      .subscribe(usuario => {
+        const idInstitucion = usuario?.idInstitucion;
+
+        if (!idInstitucion) {
+          this.cargandoReporte.set(false);
+          return;
+        }
+
+        this.verificacionSvc
+          .getReportePorInstitucion(idInstitucion)
+          .pipe(catchError(() => of(null)))
+          .subscribe(rep => {
+            this.reporte.set(rep);
+            this.cargandoReporte.set(false);
+          });
+      });
   }
 
   cargar(): void {
@@ -70,6 +129,7 @@ export class VerificacionesComponent implements OnInit {
     this.verificacionSvc.aprobar(id).subscribe({
       next: () => {
         this.setConfirmacion(item, 'aprobado');
+        this.cargarReporte();
         setTimeout(() => this.quitarDeLista(item), 1600);
       },
       error: () => {
@@ -79,13 +139,27 @@ export class VerificacionesComponent implements OnInit {
     });
   }
 
-  rechazar(item: VerificacionVista): void {
+  pedirConfirmacionRechazo(item: VerificacionVista): void {
+    this.itemARechazar.set(item);
+  }
+
+  cancelarRechazo(): void {
+    this.itemARechazar.set(null);
+  }
+
+  confirmarRechazo(): void {
+    const item = this.itemARechazar();
+    this.itemARechazar.set(null);
+    if (!item) return;
+
     const id = item.verificacion.idVerificacion;
     if (!id) return;
+
     this.setProcessing(item, true);
     this.verificacionSvc.rechazar(id).subscribe({
       next: () => {
         this.setConfirmacion(item, 'rechazado');
+        this.cargarReporte();
         setTimeout(() => this.quitarDeLista(item), 1600);
       },
       error: () => {
