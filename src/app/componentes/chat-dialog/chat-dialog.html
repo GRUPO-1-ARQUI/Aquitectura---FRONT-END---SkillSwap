@@ -1,0 +1,63 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h3>{{ tituloChat }}</h3>
+  </div>
+
+  <div class="chat-messages" #scrollContainer>
+    @for (msg of mensajes(); track msg.idMensaje ?? $index) {
+      <div class="message-row" [class.own]="esMio(msg)">
+        <div class="message-bubble">
+          @if (msg.contenido) {
+            <p class="content">{{ msg.contenido }}</p>
+          }
+
+          @if (msg.archivoUrl) {
+            <div class="attachment">
+              <span class="file-icon">DOC</span>
+              <a [href]="msg.archivoUrl" target="_blank" rel="noopener">{{ msg.archivoNombre || 'Ver archivo' }}</a>
+            </div>
+          }
+
+          <span class="time">{{ msg.fecha | date:'HH:mm' }}</span>
+        </div>
+      </div>
+    }
+    @if (mensajes().length === 0) {
+      <div class="no-messages">No hay mensajes. Di hola.</div>
+    }
+  </div>
+
+  <div class="chat-input-area">
+    @if (archivoAdjunto()) {
+      <div class="attachment-preview">
+        <span>{{ archivoAdjunto()?.name }}</span>
+        <button type="button" (click)="archivoAdjunto.set(null)">x</button>
+      </div>
+    }
+
+    <div class="input-row">
+      <label class="btn-attach" title="Adjuntar archivo" aria-label="Adjuntar archivo">
+        <input type="file" (change)="onFileSelected($event)" hidden>
+        <img src="/images/adjuntar.png" alt="">
+      </label>
+
+      <input type="text"
+             placeholder="Escribe un mensaje..."
+             [(ngModel)]="nuevoMensaje"
+             (keyup.enter)="enviar()"
+             [disabled]="cargando()">
+
+      <button class="btn-send" type="button" (click)="enviar()" [disabled]="(!nuevoMensaje.trim() && !archivoAdjunto()) || cargando()">
+        @if (cargando()) {
+          <span class="send-loader"></span>
+        } @else {
+          <span class="send-arrow">&rarr;</span>
+        }
+      </button>
+    </div>
+
+    @if (errorEnvio()) {
+      <p class="send-error">{{ errorEnvio() }}</p>
+    }
+  </div>
+</div>

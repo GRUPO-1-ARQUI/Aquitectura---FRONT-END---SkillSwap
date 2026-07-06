@@ -5,9 +5,9 @@
     <div class="ms-state">Cargando solicitudes...</div>
   } @else if (solicitudes().length === 0) {
     <div class="ms-empty ss-card">
-      <p class="ms-empty-icon">📋</p>
+      <p class="ms-empty-icon">[]</p>
       <p class="ms-empty-txt">Sin solicitudes</p>
-      <p class="ms-empty-sub">Aún no has enviado ninguna solicitud de tutoría.</p>
+      <p class="ms-empty-sub">Aun no has enviado ninguna solicitud de tutoria.</p>
     </div>
   } @else {
     <div class="ms-lista">
@@ -17,7 +17,7 @@
             <div class="ms-tutor-avatar">{{ item.tutorNombre.charAt(0).toUpperCase() }}</div>
             <div class="ms-card-info">
               <h3 class="ms-tutor-nombre">{{ item.tutorNombre }}</h3>
-              <p class="ms-habilidad">📚 {{ item.habilidadNombre }}</p>
+              <p class="ms-habilidad">{{ item.habilidadNombre }}</p>
             </div>
             <span [class]="'ss-pill-status-' + estadoPill(item.solicitud.estado)">
               {{ item.solicitud.estado ?? 'pendiente' }}
@@ -26,40 +26,55 @@
 
           <p class="ms-mensaje">{{ item.solicitud.mensaje }}</p>
 
-          @if (puedeCalificar(item.solicitud.estado) && !item.yaCalificado) {
-            <button class="ss-btn-accent ms-calificar-btn"
-                    (click)="abrirModalCalificar(item)">
-              ⭐ Calificar tutor
-            </button>
-          }
+          <div class="ms-actions">
+            @if (puedeAbrirChat(item.solicitud.estado)) {
+              <button class="ss-btn-secondary ms-chat-btn"
+                      type="button"
+                      (click)="abrirChat(item)">
+                Abrir chat
+              </button>
+            }
+            @if (puedeCalificar(item.solicitud.estado) && !item.yaCalificado) {
+              <button class="ss-btn-accent ms-calificar-btn"
+                      type="button"
+                      (click)="abrirModalCalificar(item)">
+                Calificar tutor
+              </button>
+            }
+          </div>
+
           @if (item.yaCalificado) {
-            <span class="ms-ya-calificado">Ya calificaste esta sesión ✓</span>
+            <span class="ms-ya-calificado">Ya calificaste esta sesion</span>
           }
         </div>
       }
     </div>
   }
 
-  <!-- Modal: Calificar tutor -->
   @if (modalAbierto()) {
     <div class="ms-modal-backdrop" (click)="cerrarModal()">
       <div class="ss-card ms-modal" (click)="$event.stopPropagation()">
         <div class="ms-modal-header">
-          <h3>Calificar tutor</h3>
-          <button class="ms-modal-close" (click)="cerrarModal()">✕</button>
+          <h3>Calificar a {{ solicitudActual?.tutorNombre }}</h3>
+          <button class="ms-modal-close" type="button" (click)="cerrarModal()">x</button>
         </div>
 
         @if (calificarOk()) {
-          <p class="ms-modal-ok">¡Calificación enviada! Gracias.</p>
+          <p class="ms-modal-ok">Calificacion enviada. Gracias.</p>
         } @else {
           <div class="ms-modal-body">
-            <label class="ms-label">Calificación</label>
+            <label class="ms-label">Calificacion</label>
             <div class="ms-stars-row">
               @for (n of starRange; track n) {
-                <span class="ms-star" [class.ms-star--on]="calificacion >= n"
-                      (click)="setStar(n)">★</span>
+                <button type="button"
+                        class="ms-star"
+                        [class.ms-star--on]="calificacion >= n"
+                        (click)="setStar(n)">&#9733;</button>
               }
             </div>
+            <p class="ms-rating-copy">
+              {{ calificacion ? (calificacion + ' de 5') : 'Selecciona una calificacion' }}
+            </p>
 
             <label class="ms-label">Comentario (opcional)</label>
             <textarea class="ss-input ms-textarea"
@@ -72,13 +87,35 @@
               <p class="ms-modal-err">{{ calificarErr() }}</p>
             }
 
-            <button class="ss-btn-primary ms-modal-submit"
-                    [disabled]="enviando() || calificacion === 0"
-                    (click)="enviarCalificacion()">
-              {{ enviando() ? 'Enviando...' : 'Enviar calificación' }}
-            </button>
+            <div class="ms-modal-actions">
+              <button class="ss-btn-secondary ms-modal-cancel"
+                      type="button"
+                      [disabled]="enviando()"
+                      (click)="cerrarModal()">
+                Cancelar
+              </button>
+              <button class="ss-btn-primary ms-modal-submit"
+                      type="button"
+                      [disabled]="enviando() || calificacion === 0"
+                      (click)="enviarCalificacion()">
+                {{ enviando() ? 'Enviando...' : 'Enviar calificacion' }}
+              </button>
+            </div>
           </div>
         }
+      </div>
+    </div>
+  }
+
+  @if (chatAbierto() && solicitudParaChat) {
+    <div class="modal-overlay" (click)="cerrarChat()">
+      <div class="chat-modal-content" (click)="$event.stopPropagation()">
+        <button class="close-btn" type="button" (click)="cerrarChat()">x</button>
+        <app-chat-dialog
+          [idSolicitud]="solicitudParaChat.solicitud.idSolicitud!"
+          [idReceptor]="solicitudParaChat.tutorId"
+          [tituloChat]="'Chat con ' + solicitudParaChat.tutorNombre">
+        </app-chat-dialog>
       </div>
     </div>
   }

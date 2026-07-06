@@ -8,20 +8,16 @@
 
   @if (cargando()) {
     <div class="st-state">Cargando solicitudes...</div>
-
   } @else if (solicitudes().length === 0) {
     <div class="st-empty ss-card">
-      <p class="st-empty-icon">📭</p>
-      <p class="st-empty-txt">No has recibido solicitudes aún.</p>
-      <p class="st-empty-sub">Cuando un aprendiz te contacte, aparecerá aquí.</p>
+      <p class="st-empty-icon">[]</p>
+      <p class="st-empty-txt">No has recibido solicitudes aun.</p>
+      <p class="st-empty-sub">Cuando un aprendiz te contacte, aparecera aqui.</p>
     </div>
-
   } @else {
     <div class="st-lista">
       @for (item of solicitudes(); track item.solicitud.idSolicitud) {
         <div class="ss-card st-card">
-
-          <!-- Cabecera: aprendiz + estado -->
           <div class="st-card-header">
             <div class="st-avatar">
               {{ item.aprendizNombre.charAt(0).toUpperCase() }}
@@ -40,41 +36,129 @@
             </span>
           </div>
 
-          <!-- Habilidad solicitada -->
           <div class="st-habilidad-row">
             <span class="st-label">Habilidad solicitada:</span>
             <span class="ss-chip">{{ item.habilidadNombre }}</span>
           </div>
 
-          <!-- Mensaje del aprendiz -->
           <p class="st-mensaje">{{ item.solicitud.mensaje }}</p>
 
-          <!-- Estado de créditos (US51) -->
-          @if (esCompletada(item.solicitud.estado)) {
+          @if (puedeCalificar(item.solicitud.estado) && !puedeAbrirChat(item.solicitud.estado)) {
             @if (item.yaCalificado) {
-              <span class="ss-pill-status-ok st-pill st-pill-creditos">Créditos otorgados</span>
+              <span class="ss-pill-status-ok st-pill st-pill-creditos">Creditos otorgados</span>
             } @else {
-              <span class="ss-pill-status-pending st-pill st-pill-creditos">Pendiente de calificación del aprendiz</span>
+              <span class="ss-pill-status-pending st-pill st-pill-creditos">Pendiente de calificacion del aprendiz</span>
             }
           }
 
-          <!-- Acciones: solo para pendientes -->
-          @if (esPendiente(item.solicitud.estado)) {
-            <div class="st-acciones">
-              <button class="ss-btn-icon-ok st-accion-btn"
-                      [disabled]="item.procesando"
-                      (click)="aceptar(item)">
-                Aceptar
-              </button>
+          <div class="st-acciones">
+            @if (esPendiente(item.solicitud.estado)) {
               <button class="ss-btn-icon-no st-accion-btn"
+                      type="button"
                       [disabled]="item.procesando"
                       (click)="rechazar(item)">
                 Rechazar
               </button>
-            </div>
-          }
+              <button class="ss-btn-icon-ok st-accion-btn"
+                      type="button"
+                      [disabled]="item.procesando"
+                      (click)="aceptar(item)">
+                Aceptar
+              </button>
+            }
+
+            @if (puedeAbrirChat(item.solicitud.estado)) {
+              <button class="st-accion-btn st-chat-btn"
+                      type="button"
+                      [disabled]="item.procesando"
+                      (click)="abrirChat(item)">
+                Responder
+              </button>
+            }
+
+            @if (puedeCalificar(item.solicitud.estado) && !puedeAbrirChat(item.solicitud.estado) && !item.yaCalificado) {
+              <button class="st-accion-btn st-calificar-btn"
+                      type="button"
+                      [disabled]="item.procesando"
+                      (click)="abrirModalCalificar(item)">
+                Calificar aprendiz
+              </button>
+            }
+          </div>
         </div>
       }
+    </div>
+  }
+
+  @if (chatAbierto() && solicitudParaChat) {
+    <div class="st-modal-overlay" (click)="cerrarChat()">
+      <div class="st-chat-modal" (click)="$event.stopPropagation()">
+        <div class="st-chat-actions">
+          <button class="st-finalizar-btn" type="button" (click)="finalizarChatYCalificar()">
+            Finalizar y calificar
+          </button>
+          <button class="st-chat-close" type="button" (click)="cerrarChat()">Cerrar</button>
+        </div>
+        <app-chat-dialog
+          [idSolicitud]="solicitudParaChat.solicitud.idSolicitud!"
+          [idReceptor]="solicitudParaChat.solicitud.idAprendiz"
+          [tituloChat]="'Chat con ' + solicitudParaChat.aprendizNombre">
+        </app-chat-dialog>
+      </div>
+    </div>
+  }
+
+  @if (modalCalificarAbierto() && solicitudParaCalificar) {
+    <div class="st-modal-overlay" (click)="cerrarModalCalificar()">
+      <div class="st-rating-modal ss-card" (click)="$event.stopPropagation()">
+        <div class="st-rating-header">
+          <h3>Calificar a {{ solicitudParaCalificar.aprendizNombre }}</h3>
+          <button class="st-rating-close" type="button" (click)="cerrarModalCalificar()">x</button>
+        </div>
+
+        @if (calificarOk()) {
+          <p class="st-rating-success">Calificacion enviada. Gracias.</p>
+        } @else {
+          <label class="st-rating-label">Calificacion</label>
+          <div class="st-stars">
+            @for (n of starRange; track n) {
+              <button type="button"
+                      class="st-star"
+                      [class.active]="calificacion >= n"
+                      (click)="setStar(n)">&#9733;</button>
+            }
+          </div>
+          <p class="st-rating-value">
+            {{ calificacion ? (calificacion + ' de 5') : 'Selecciona una calificacion' }}
+          </p>
+
+          <label class="st-rating-label">Comentario (opcional)</label>
+          <textarea class="st-rating-comment"
+                    [(ngModel)]="comentario"
+                    name="comentarioAprendiz"
+                    rows="4"
+                    placeholder="Comparte como fue la sesion con este aprendiz..."></textarea>
+
+          @if (calificarErr()) {
+            <p class="st-rating-error">{{ calificarErr() }}</p>
+          }
+
+          <div class="st-rating-actions">
+            <button class="st-rating-secondary"
+                    type="button"
+                    [disabled]="enviandoCalificacion()"
+                    (click)="cerrarModalCalificar()">
+              Cancelar
+            </button>
+            <button class="st-rating-primary"
+                    type="button"
+                    [disabled]="enviandoCalificacion() || calificacion === 0"
+                    (click)="enviarCalificacion()">
+              {{ enviandoCalificacion() ? 'Enviando...' : 'Enviar calificacion' }}
+            </button>
+          </div>
+        }
+      </div>
     </div>
   }
 </div>
