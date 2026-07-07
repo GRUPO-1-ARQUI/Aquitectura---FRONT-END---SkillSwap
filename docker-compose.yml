@@ -1,10 +1,18 @@
 services:
   frontend:
+    image: javacf/front-end
     build:
       context: .
+      dockerfile: Dockerfile
       args:
-        API_URL: ${API_URL:-http://localhost:8081/api}
+        API_URL: ${API_URL:-http://3.21.40.9:6868/api}
     container_name: skillswap-frontend
     ports:
-      - "${FRONTEND_PORT:-80}:80"
+      - "4200:80"
+    networks:
+      - my-network-name
     restart: unless-stopped
+
+networks:
+  my-network-name:
+    external: true
