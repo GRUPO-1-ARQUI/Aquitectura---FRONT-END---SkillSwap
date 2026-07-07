@@ -1,0 +1,10 @@
+services:
+  frontend:
+    build:
+      context: .
+      args:
+        API_URL: ${API_URL:-http://localhost:8081/api}
+    container_name: skillswap-frontend
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    restart: unless-stopped
